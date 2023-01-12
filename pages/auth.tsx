@@ -1,6 +1,6 @@
 import { CardBody, CardHeader } from "@chakra-ui/card";
 import { Card, Center, Heading, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
-import LoginForm from "../components/AuthForm";
+import LoginForm from "../components/pages/auth/AuthForm";
 
 const Register = () => {
     return (
