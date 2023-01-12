@@ -1,7 +1,7 @@
 import { RepeatIcon } from '@chakra-ui/icons';
 import { Stack, useRadioGroup, Image, Input, Heading, Container, Grid, GridItem, Text, HStack, IconButton, Divider, Box } from '@chakra-ui/react';
-import AttributeInput from '../components/pages/auth/new-character/AttributeInput';
-import RadioCard from '../components/pages/auth/new-character/RadioCard';
+import AttributeInput from '../components/pages/new-character/AttributeInput';
+import RadioCard from '../components/pages/new-character/RadioCard';
 
 const NewCharacter = () => {
     const options = ["Warrior", "Mage", "Rogue", "Priest"];
