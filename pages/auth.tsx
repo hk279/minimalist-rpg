@@ -1,6 +1,7 @@
 import { CardBody, CardHeader } from "@chakra-ui/card";
 import { Card, Center, Heading, Tabs, TabList, Tab, TabPanels, TabPanel } from "@chakra-ui/react";
-import LoginForm from "../components/pages/auth/AuthForm";
+import LoginForm from "../components/pages/auth/LoginForm";
+import SignUpForm from "../components/pages/auth/SignUpForm";
 
 const Register = () => {
     return (
@@ -14,7 +15,7 @@ const Register = () => {
                     <Tabs align="center">
                         <TabList>
                             <Tab>Login</Tab>
-                            <Tab>Register</Tab>
+                            <Tab>Sign Up</Tab>
                         </TabList>
 
                         <TabPanels>
@@ -23,7 +24,7 @@ const Register = () => {
                             </TabPanel>
 
                             <TabPanel>
-                                <LoginForm />
+                                <SignUpForm />
                             </TabPanel>
                         </TabPanels>
                     </Tabs>
