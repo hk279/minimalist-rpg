@@ -19,10 +19,10 @@ const NewCharacterForm = () => {
     const { remainingAttributePoints, avatarUrl, randomizeAvatar } = useNewCharacterContext();
 
     return (
-        <Container py={16}>
-            <Stack gap={4}>
+        <Container py={4}>
+            <Stack gap={4} alignItems="center">
                 {/* Avatar */}
-                <Box position="relative" border="2px" borderColor="gray.100" borderRadius='lg'>
+                <Box position="relative" border="2px" borderColor="gray.100" borderRadius='lg' boxSize="xs">
                     <Image src={avatarUrl} alt="avatar" />
                     <IconButton icon={<RepeatIcon />} aria-label="Randomize avatar" position="absolute" bottom={4} right={4} onClick={() => randomizeAvatar()} />
                 </Box>
@@ -30,7 +30,7 @@ const NewCharacterForm = () => {
                 <Divider />
 
                 {/* Class selection */}
-                <HStack gap={8} justifyContent="space-between" {...group}>
+                <HStack justifyContent="space-between" width="full" {...group}>
                     {characterClasses.map((cc) => {
                         const radio = getRadioProps({ value: cc });
                         return (
@@ -43,8 +43,6 @@ const NewCharacterForm = () => {
 
                 {/* Character name */}
                 <Input maxLength={24} placeholder="Character name" />
-
-                <Divider />
 
                 {/* Attributes */}
                 <Grid gap={4} alignItems="center" width="70%" alignSelf="center">
