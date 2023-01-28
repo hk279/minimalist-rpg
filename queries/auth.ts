@@ -1,5 +1,5 @@
-import { useToast } from "@chakra-ui/react";
 import axios from "../axios";
+import { useToast } from "@chakra-ui/react";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 
@@ -19,40 +19,31 @@ type UserDetails = {
     token: string;
 };
 
-const useAuth = () => {
+export const useLogin = () => {
     const router = useRouter();
     const toast = useToast();
 
-    const { mutate: login, isLoading: isAuthenticating, isSuccess: isLoginSuccess } =
-        useMutation<UserDetails, Error, LoginInput>(
-            (input: LoginInput) => axios.post('/Auth/login', input).then(res => res.data.data),
-            {
-                onSuccess: (data) => {
-                    toast({ title: "Welcome " + data.username, status: "success" });
-                    localStorage.setItem("token", data.token);
-                    router.push("/");
-                },
-                onError: () => {
-                    toast({ title: "Login failed", status: "error" });
-                }
-            }
-        );
-
-    const { mutate: signUp } = useMutation<
-        number,
-        Error,
-        SignUpInput
-    >((input: SignUpInput) => axios.post('/Auth/register', input),
+    return useMutation(
+        (input: LoginInput) => axios.post('/Auth/login', input).then(res => res.data.data),
         {
-            onSuccess: () => {
-                toast({ title: "User created", status: "success" });
+            onSuccess: (data: UserDetails) => {
+                toast({ title: "Welcome " + data.username, status: "success" });
+                localStorage.setItem("token", data.token);
+                router.push("/");
             },
-            onError: () => {
-                toast({ title: "Sign up failed", status: "error" });
-            }
-        });
+            onError: () => { toast({ title: "Login failed", status: "error" }); }
+        }
+    );
 
-    return { login, isAuthenticating, isLoginSuccess, signUp };
 };
 
-export default useAuth;
+export const useSignUp = () => {
+    const toast = useToast();
+
+    return useMutation(
+        (input: SignUpInput) => axios.post('/Auth/register', input),
+        {
+            onSuccess: () => { toast({ title: "User created", status: "success" }); },
+            onError: () => { toast({ title: "Sign up failed", status: "error" }); }
+        });
+};

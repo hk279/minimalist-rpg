@@ -1,9 +1,9 @@
 import { Button, Divider, Input, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import useAuth from "../../../queries/auth";
+import { useLogin } from "../../../queries/auth";
 
 const LoginForm = () => {
-    const { login, isAuthenticating } = useAuth();
+    const { mutate: login, isLoading } = useLogin();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -18,7 +18,7 @@ const LoginForm = () => {
             <Button
                 colorScheme="teal"
                 onClick={() => login({ username, password })}
-                isLoading={isAuthenticating}
+                isLoading={isLoading}
             >
                 Login
             </Button>

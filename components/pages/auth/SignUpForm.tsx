@@ -1,9 +1,9 @@
 import { Button, Divider, Input, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import useAuth from "../../../queries/auth";
+import { useSignUp } from "../../../queries/auth";
 
 const SignUpForm = () => {
-    const { signUp } = useAuth();
+    const { mutate: signUp, isLoading } = useSignUp();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -16,7 +16,7 @@ const SignUpForm = () => {
 
             <Divider />
 
-            <Button colorScheme="teal" onClick={() => signUp({ username, password })}>Sign Up</Button>
+            <Button colorScheme="teal" onClick={() => signUp({ username, password })} isLoading={isLoading}>Sign Up</Button>
         </Stack>
     );
 };

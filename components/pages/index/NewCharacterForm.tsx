@@ -5,18 +5,17 @@ import RadioCard from './RadioCard';
 import useNewCharacterContext from '../../../context/NewCharacterContext';
 import { CharacterClass } from '../../../types';
 
-const NewCharacterForm = () => {
-    const characterClasses: CharacterClass[] = ["Warrior", "Mage", "Rogue", "Priest"];
+const characterClasses: CharacterClass[] = ["Warrior", "Mage", "Priest"];
 
+const NewCharacterForm = () => {
+    const { remainingAttributePoints, avatarUrl, randomizeAvatar, characterName, setCharacterName, setCharacterClass } = useNewCharacterContext();
     const { getRootProps, getRadioProps } = useRadioGroup({
         name: 'class',
         defaultValue: 'Warrior',
-        onChange: console.log,
+        onChange: (value: CharacterClass) => setCharacterClass(value),
     });
 
     const group = getRootProps();
-
-    const { remainingAttributePoints, avatarUrl, randomizeAvatar } = useNewCharacterContext();
 
     return (
         <Container py={4}>
@@ -42,14 +41,13 @@ const NewCharacterForm = () => {
                 </HStack>
 
                 {/* Character name */}
-                <Input maxLength={24} placeholder="Character name" />
+                <Input maxLength={24} placeholder="Character name" value={characterName} onChange={(e) => setCharacterName(e.target.value)} />
 
                 {/* Attributes */}
                 <Grid gap={4} alignItems="center" width="70%" alignSelf="center">
                     <AttributeInput attribute="strength" />
-                    <AttributeInput attribute="stamina" />
-                    <AttributeInput attribute="agility" />
                     <AttributeInput attribute="intelligence" />
+                    <AttributeInput attribute="stamina" />
 
                     <GridItem gridColumn="2" justifySelf="end">
                         <HStack gap={8} justifyContent="flex-end" width="fit-content">

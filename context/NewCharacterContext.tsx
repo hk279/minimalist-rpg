@@ -1,4 +1,5 @@
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useMemo, useState } from "react";
+import { useCreateCharacter } from "../queries/character";
 import { Attribute, Attributes, CharacterClass } from "../types";
 
 interface NewCharacterContextInterface {
@@ -12,6 +13,8 @@ interface NewCharacterContextInterface {
     decrementAttribute: (attribute: Attribute) => void;
     avatarUrl: string;
     randomizeAvatar: () => void;
+    createNewCharacter: () => void;
+    isCreatingCharacter: boolean;
 }
 
 const avatarBaseUrl = "https://api.dicebear.com/5.x/adventurer/svg?seed=$";
@@ -21,8 +24,10 @@ export const NewCharacterContext = createContext<NewCharacterContextInterface | 
 export const NewCharacterProvider = (props: { children: ReactNode; }) => {
     const [characterName, setCharacterName] = useState("");
     const [characterClass, setCharacterClass] = useState<CharacterClass>("Warrior");
-    const [attributes, setAttributes] = useState({ strength: 5, stamina: 5, agility: 5, intelligence: 5 });
+    const [attributes, setAttributes] = useState({ strength: 5, stamina: 5, intelligence: 5 });
     const [avatarUrl, setAvatarUrl] = useState(avatarBaseUrl + "2");
+
+    const { mutate: createCharacter, isLoading: isCreatingCharacter } = useCreateCharacter();
 
     const remainingAttributePoints = useMemo(() => {
         const maxAttributePoints = 30;
@@ -43,6 +48,10 @@ export const NewCharacterProvider = (props: { children: ReactNode; }) => {
         setAvatarUrl(avatarBaseUrl + avatarSeed);
     };
 
+    const createNewCharacter = () => {
+        createCharacter({ name: characterName, avatar: avatarUrl, class: characterClass, ...attributes });
+    };
+
     return (
         <NewCharacterContext.Provider value={{
             characterName,
@@ -54,7 +63,9 @@ export const NewCharacterProvider = (props: { children: ReactNode; }) => {
             incrementAttribute,
             decrementAttribute,
             avatarUrl,
-            randomizeAvatar
+            randomizeAvatar,
+            createNewCharacter,
+            isCreatingCharacter
         }}>
             {props.children}
         </NewCharacterContext.Provider>
