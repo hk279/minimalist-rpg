@@ -14,8 +14,8 @@ const Home = () => {
     if (isLoading || data == null) return <Spinner size='xl' />;
 
     return (
-        <Container maxW='container.xl' p={8}>
-            <HStack gap={16}>
+        <Center h="100vh" p={8} bgColor="teal.50">
+            <HStack gap={16} justifyContent="center">
                 {data.map(character => (
                     <CharacterCard key={character.id} character={character} />
                 ))}
@@ -34,7 +34,7 @@ const Home = () => {
             <NewCharacterProvider>
                 <NewCharacterModal isOpen={isOpen} onClose={onClose} />
             </NewCharacterProvider>
-        </Container>
+        </Center>
     );
 };
 
