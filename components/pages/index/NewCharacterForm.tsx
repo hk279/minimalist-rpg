@@ -41,7 +41,13 @@ const NewCharacterForm = () => {
                 </HStack>
 
                 {/* Character name */}
-                <Input maxLength={24} placeholder="Character name" value={characterName} onChange={(e) => setCharacterName(e.target.value)} />
+                <Input
+                    isRequired
+                    maxLength={24}
+                    placeholder="Character name"
+                    value={characterName}
+                    onChange={(e) => setCharacterName(e.target.value)}
+                />
 
                 {/* Attributes */}
                 <Grid gap={4} alignItems="center" width="70%" alignSelf="center">

@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useToast } from "@chakra-ui/react";
 import { CharacterClass, Skill } from "../types";
 
-type Character = {
+export type Character = {
     id: number,
     name: string,
     avatar: string,

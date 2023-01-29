@@ -15,6 +15,7 @@ interface NewCharacterContextInterface {
     randomizeAvatar: () => void;
     createNewCharacter: () => void;
     isCreatingCharacter: boolean;
+    resetForm: () => void;
 }
 
 const avatarBaseUrl = "https://api.dicebear.com/5.x/adventurer/svg?seed=$";
@@ -52,6 +53,13 @@ export const NewCharacterProvider = (props: { children: ReactNode; }) => {
         createCharacter({ name: characterName, avatar: avatarUrl, class: characterClass, ...attributes });
     };
 
+    const resetForm = () => {
+        setAttributes({ strength: 5, stamina: 5, intelligence: 5 });
+        setAvatarUrl(avatarBaseUrl + "2");
+        setCharacterName("");
+        setCharacterClass("Warrior");
+    };
+
     return (
         <NewCharacterContext.Provider value={{
             characterName,
@@ -65,7 +73,8 @@ export const NewCharacterProvider = (props: { children: ReactNode; }) => {
             avatarUrl,
             randomizeAvatar,
             createNewCharacter,
-            isCreatingCharacter
+            isCreatingCharacter,
+            resetForm
         }}>
             {props.children}
         </NewCharacterContext.Provider>

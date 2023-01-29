@@ -8,7 +8,7 @@ type Props = {
 };
 
 const NewCharacterModal = ({ isOpen, onClose }: Props) => {
-    const { createNewCharacter, isCreatingCharacter } = useNewCharacterContext();
+    const { createNewCharacter, isCreatingCharacter, characterName, resetForm } = useNewCharacterContext();
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size="2xl">
@@ -32,7 +32,14 @@ const NewCharacterModal = ({ isOpen, onClose }: Props) => {
                     <Button colorScheme="teal" variant="ghost" mr={3} onClick={onClose}>
                         Close
                     </Button>
-                    <Button isLoading={isCreatingCharacter} colorScheme="teal" onClick={() => { createNewCharacter(); onClose(); }}>Create</Button>
+                    <Button
+                        disabled={characterName.length < 3}
+                        isLoading={isCreatingCharacter}
+                        colorScheme="teal"
+                        onClick={() => { createNewCharacter(); resetForm(); onClose(); }}
+                    >
+                        Create
+                    </Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
