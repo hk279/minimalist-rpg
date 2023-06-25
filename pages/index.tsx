@@ -1,41 +1,64 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Button, useDisclosure, Container, Spinner, HStack, Card, Heading, Stack, Text, Box, Center } from "@chakra-ui/react";
-import CharacterCard from "../components/pages/index/CharacterCard";
-import NewCharacterModal from "../components/pages/index/NewCharacterModal";
+import {
+  useDisclosure,
+  Spinner,
+  HStack,
+  Card,
+  Heading,
+  Stack,
+  Center,
+} from "@chakra-ui/react";
+import CharacterSelectionCard from "../components/index/CharacterSelectionCard";
+import NewCharacterModal from "../components/index/NewCharacterModal";
 import { NewCharacterProvider } from "../context/NewCharacterContext";
-import { useCharacterData } from "../queries/character";
+import { useCharacterList } from "../queries/character";
+
+const MAX_CHARACTER_COUNT = 3;
 
 const Home = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { data, isLoading } = useCharacterData();
-    const characterCount = data?.length ?? 0;
-    const maxCharacterCount = 3;
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { data, isLoading } = useCharacterList();
+  const characterCount = data?.length ?? 0;
 
-    if (isLoading || data == null) return <Spinner size='xl' />;
-
+  if (isLoading || data == null) {
     return (
-        <Center h="100vh" p={8} bgColor="teal.50">
-            <HStack gap={16} justifyContent="center">
-                {data.map(character => (
-                    <CharacterCard key={character.id} character={character} />
-                ))}
-
-                {characterCount < maxCharacterCount &&
-                    <Card p={4} onClick={onOpen} cursor="pointer" _hover={{ boxShadow: "xl" }}>
-                        <Stack alignItems="center">
-                            <Center boxSize="2xs">
-                                <AddIcon w={16} h={16} />
-                            </Center>
-                            <Heading height={16} size="md">New Character</Heading>
-                        </Stack>
-                    </Card>}
-            </HStack>
-
-            <NewCharacterProvider>
-                <NewCharacterModal isOpen={isOpen} onClose={onClose} />
-            </NewCharacterProvider>
-        </Center>
+      <Center>
+        <Spinner size="xl" />
+      </Center>
     );
+  }
+
+  return (
+    <Center h="100vh" p={8} bgColor="teal.50">
+      <HStack gap={16} justifyContent="center">
+        {data.map((character) => (
+          <CharacterSelectionCard key={character.id} character={character} />
+        ))}
+
+        {characterCount < MAX_CHARACTER_COUNT && (
+          <Card
+            p={4}
+            onClick={onOpen}
+            cursor="pointer"
+            _hover={{ boxShadow: "xl" }}
+          >
+            <Stack alignItems="center">
+              <Center boxSize="2xs">
+                <AddIcon w={16} h={16} />
+              </Center>
+              <Heading height={16} size="md">
+                New Character
+              </Heading>
+            </Stack>
+          </Card>
+        )}
+      </HStack>
+
+      <NewCharacterProvider>
+        <NewCharacterModal isOpen={isOpen} onClose={onClose} />
+      </NewCharacterProvider>
+    </Center>
+  );
 };
 
 export default Home;
