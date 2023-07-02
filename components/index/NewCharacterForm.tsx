@@ -88,6 +88,7 @@ const NewCharacterForm = () => {
           <AttributeInput attribute="strength" />
           <AttributeInput attribute="intelligence" />
           <AttributeInput attribute="stamina" />
+          <AttributeInput attribute="spirit" />
 
           <GridItem gridColumn="2" justifySelf="end">
             <HStack gap={8} justifyContent="flex-end" width="fit-content">

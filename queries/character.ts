@@ -17,6 +17,7 @@ export type Character = {
   strength: number;
   intelligence: number;
   stamina: number;
+  spirit: number;
   maxHitPoints: number;
   currentHitPoints: number;
   armor: number;
@@ -32,6 +33,7 @@ type CreateCharacterInput = {
   strength: number;
   intelligence: number;
   stamina: number;
+  spirit: number;
 };
 
 export const useCharacterList = () => {

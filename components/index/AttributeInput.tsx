@@ -39,7 +39,7 @@ const AttributeInput = ({ attribute }: { attribute: Attribute }) => {
             {...decrement}
             icon={<MinusIcon />}
             aria-label={`Decrement ${attribute}`}
-            disabled={attributes[attribute] < 2}
+            isDisabled={attributes[attribute] < 6}
             onClick={() => decrementAttribute(attribute)}
           />
 
@@ -56,7 +56,7 @@ const AttributeInput = ({ attribute }: { attribute: Attribute }) => {
             {...increment}
             icon={<AddIcon />}
             aria-label={`Increment ${attribute}`}
-            disabled={remainingAttributePoints < 1}
+            isDisabled={remainingAttributePoints < 1}
             onClick={() => incrementAttribute(attribute)}
           />
         </HStack>

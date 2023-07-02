@@ -1,10 +1,11 @@
 export type Attributes = {
   strength: number;
-  stamina: number;
   intelligence: number;
+  stamina: number;
+  spirit: number;
 };
 
-export type Attribute = "strength" | "stamina" | "intelligence";
+export type Attribute = "strength" | "intelligence" | "stamina" | "spirit";
 
 export type SecondaryAttribute = "armor" | "resistance";
 

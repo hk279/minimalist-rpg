@@ -37,8 +37,9 @@ export const NewCharacterProvider = (props: { children: ReactNode }) => {
     useState<CharacterClass>("Warrior");
   const [attributes, setAttributes] = useState({
     strength: 5,
-    stamina: 5,
     intelligence: 5,
+    stamina: 5,
+    spirit: 5,
   });
   const [avatarUrl, setAvatarUrl] = useState(avatarBaseUrl + "2");
 
@@ -77,7 +78,7 @@ export const NewCharacterProvider = (props: { children: ReactNode }) => {
   };
 
   const resetForm = () => {
-    setAttributes({ strength: 5, stamina: 5, intelligence: 5 });
+    setAttributes({ strength: 5, intelligence: 5, stamina: 5, spirit: 5 });
     setAvatarUrl(avatarBaseUrl + "2");
     setCharacterName("");
     setCharacterClass("Warrior");

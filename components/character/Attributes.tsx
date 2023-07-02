@@ -10,13 +10,13 @@ const Attributes = ({ character }: { character: Character }) => {
           <Image boxSize="2xs" src={character.avatar} alt="Character avatar" />
 
           <Stack spacing={8}>
-            <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+            <Grid templateColumns="repeat(2, 1fr)" gap={2}>
               <AttributeRow attribute="strength" character={character} />
               <AttributeRow attribute="intelligence" character={character} />
               <AttributeRow attribute="stamina" character={character} />
             </Grid>
 
-            <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+            <Grid templateColumns="repeat(2, 1fr)" gap={2}>
               <AttributeRow attribute="armor" character={character} />
               <AttributeRow attribute="resistance" character={character} />
             </Grid>
