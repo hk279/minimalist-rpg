@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { Character } from "../../queries/character";
 import AttributeRow from "./AttributeRow";
-import { HeartFilled, ThunderboltFilled } from "@ant-design/icons";
+import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 
 const Attributes = ({ character }: { character: Character }) => {
   return (
@@ -20,13 +20,13 @@ const Attributes = ({ character }: { character: Character }) => {
         <Stack>
           <HStack justifyContent="center" gap={8}>
             <HStack>
-              <Icon as={HeartFilled} color="red.500" />
+              <Icon as={AiFillHeart} color="red.500" />
               <Text fontWeight="bold" color="red.500">
                 {character.currentHitPoints} / {character.maxHitPoints}
               </Text>
             </HStack>
             <HStack>
-              <Icon as={ThunderboltFilled} color="blue.500" />
+              <Icon as={AiFillThunderbolt} color="blue.500" />
               <Text fontWeight="bold" color="blue.500">
                 {character.currentEnergy} / {character.maxEnergy}
               </Text>
