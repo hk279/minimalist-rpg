@@ -7,8 +7,12 @@ import {
   useMemo,
   useState,
 } from "react";
-import { useCreateCharacter } from "../queries/character";
-import { Attribute, Attributes, CharacterClass } from "../types";
+import {
+  useCreateCharacter,
+  Attribute,
+  Attributes,
+  CharacterClass,
+} from "../queries/character";
 
 interface NewCharacterContextInterface {
   characterName: string;

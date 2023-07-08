@@ -3,10 +3,6 @@ import {
   Button,
   ButtonGroup,
   Center,
-  Container,
-  Divider,
-  Flex,
-  HStack,
   Heading,
   Spinner,
   Stack,
@@ -18,26 +14,21 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
-import { useCharacter } from "../../queries/character";
+import { useCharacter } from "../../../queries/character";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
-import Attributes from "../../components/character/Attributes";
+import Attributes from "../../../components/character/Attributes";
 import Link from "next/link";
+import LoadingPage from "../../../components/generic/LoadingPage";
 
 const CharacterView = () => {
   const router = useRouter();
   const { data: character, isLoading } = useCharacter(Number(router.query.id));
 
-  if (isLoading || character == null) {
-    return (
-      <Center>
-        <Spinner size="xl" />
-      </Center>
-    );
-  }
+  if (isLoading || character == null) return <LoadingPage />;
 
   return (
-    <Box padding="4" height="100vh" width="100%" bgColor="teal.50">
+    <Box padding="4" h="100vh" w="100%" bgColor="teal.50">
       <Stack spacing="4">
         <Stack
           divider={<StackDivider borderColor="gray.200" />}
@@ -46,7 +37,9 @@ const CharacterView = () => {
           textAlign="center"
         >
           <Heading as="span">{character.name}</Heading>
-          <Text>Level 1 {character.class}</Text>
+          <Text>
+            {character.level} {character.class}
+          </Text>
         </Stack>
 
         <Tabs align="center" colorScheme="teal" size="lg">
@@ -71,7 +64,15 @@ const CharacterView = () => {
 
         <Center>
           <ButtonGroup spacing={8}>
-            <Button colorScheme="teal">To Battle!</Button>
+            <Button colorScheme="teal">
+              {character.fightId != null ? (
+                <Link href={`/character/${character.id}/fight`}>
+                  Continue Battle
+                </Link>
+              ) : (
+                "To Battle"
+              )}
+            </Button>
             <Button colorScheme="teal" variant="link">
               <Link href="/">Go Back</Link>
             </Button>

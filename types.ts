@@ -1,20 +1,13 @@
-export type Attributes = {
-  strength: number;
-  intelligence: number;
-  stamina: number;
-  spirit: number;
-};
-
-export type Attribute = "strength" | "intelligence" | "stamina" | "spirit";
-
-export type SecondaryAttribute = "armor" | "resistance";
-
-export type CharacterClass = "Warrior" | "Mage" | "Priest";
+// TODO: Move to query files later
 
 export type DamageType = "physical" | "magic";
+
+export type TargetType = "self" | "friendly" | "enemy";
 
 export type Skill = {
   name: string;
   damage: number;
+  healing: number;
   damageType: DamageType;
+  targetType: TargetType;
 };

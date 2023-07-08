@@ -15,7 +15,9 @@ const CharacterSelectionCard = ({
           <Stack height={16} gap={1} alignItems="center">
             <Heading size="md">{character.name}</Heading>
             <HStack>
-              <Text>Level 1 {character.class}</Text>
+              <Text>
+                Level {character.level} {character.class}
+              </Text>
             </HStack>
           </Stack>
         </Stack>

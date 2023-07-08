@@ -12,6 +12,7 @@ import CharacterSelectionCard from "../components/index/CharacterSelectionCard";
 import NewCharacterModal from "../components/index/NewCharacterModal";
 import { NewCharacterProvider } from "../context/NewCharacterContext";
 import { useCharacterList } from "../queries/character";
+import LoadingPage from "../components/generic/LoadingPage";
 
 const MAX_CHARACTER_COUNT = 3;
 
@@ -20,13 +21,7 @@ const Home = () => {
   const { data, isLoading } = useCharacterList();
   const characterCount = data?.length ?? 0;
 
-  if (isLoading || data == null) {
-    return (
-      <Center>
-        <Spinner size="xl" />
-      </Center>
-    );
-  }
+  if (isLoading || data == null) return <LoadingPage />;
 
   return (
     <Center h="100vh" p={8} bgColor="teal.50">

@@ -1,27 +1,62 @@
-import { Card, Center, Grid, HStack, Image, Stack } from "@chakra-ui/react";
+import {
+  Card,
+  Center,
+  Divider,
+  Grid,
+  HStack,
+  Icon,
+  Image,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import { Character } from "../../queries/character";
 import AttributeRow from "./AttributeRow";
+import { HeartFilled, ThunderboltFilled } from "@ant-design/icons";
 
 const Attributes = ({ character }: { character: Character }) => {
   return (
     <Card width="fit-content" padding="12">
       <Center>
-        <HStack spacing={4} backgroundColor="white">
-          <Image boxSize="2xs" src={character.avatar} alt="Character avatar" />
+        <Stack>
+          <HStack justifyContent="center" gap={8}>
+            <HStack>
+              <Icon as={HeartFilled} color="red.500" />
+              <Text fontWeight="bold" color="red.500">
+                {character.currentHitPoints} / {character.maxHitPoints}
+              </Text>
+            </HStack>
+            <HStack>
+              <Icon as={ThunderboltFilled} color="blue.500" />
+              <Text fontWeight="bold" color="blue.500">
+                {character.currentEnergy} / {character.maxEnergy}
+              </Text>
+            </HStack>
+          </HStack>
 
-          <Stack spacing={8}>
-            <Grid templateColumns="repeat(2, 1fr)" gap={2}>
-              <AttributeRow attribute="strength" character={character} />
-              <AttributeRow attribute="intelligence" character={character} />
-              <AttributeRow attribute="stamina" character={character} />
-            </Grid>
+          <Divider />
 
-            <Grid templateColumns="repeat(2, 1fr)" gap={2}>
-              <AttributeRow attribute="armor" character={character} />
-              <AttributeRow attribute="resistance" character={character} />
-            </Grid>
-          </Stack>
-        </HStack>
+          <HStack spacing={4} backgroundColor="white">
+            <Image
+              boxSize="2xs"
+              src={character.avatar}
+              alt="Character avatar"
+            />
+
+            <Stack spacing={8}>
+              <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+                <AttributeRow attribute="strength" character={character} />
+                <AttributeRow attribute="intelligence" character={character} />
+                <AttributeRow attribute="stamina" character={character} />
+                <AttributeRow attribute="spirit" character={character} />
+              </Grid>
+
+              <Grid templateColumns="repeat(2, 1fr)" gap={2}>
+                <AttributeRow attribute="armor" character={character} />
+                <AttributeRow attribute="resistance" character={character} />
+              </Grid>
+            </Stack>
+          </HStack>
+        </Stack>
       </Center>
     </Card>
   );

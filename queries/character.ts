@@ -1,11 +1,27 @@
 import axios from "../axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useToast } from "@chakra-ui/react";
-import { CharacterClass, Skill } from "../types";
+import { Skill } from "../types";
+
+export type Attributes = {
+  strength: number;
+  intelligence: number;
+  stamina: number;
+  spirit: number;
+};
+
+export type Attribute = "strength" | "intelligence" | "stamina" | "spirit";
+
+export type SecondaryAttribute = "armor" | "resistance";
+
+export const characterClasses = ["Warrior", "Mage", "Priest"];
+
+export type CharacterClass = "Warrior" | "Mage" | "Priest";
 
 export type CharacterListing = {
   id: number;
   name: string;
+  level: number;
   avatar: string;
   class: CharacterClass;
 };
@@ -13,6 +29,7 @@ export type CharacterListing = {
 export type Character = {
   id: number;
   name: string;
+  level: number;
   avatar: string;
   strength: number;
   intelligence: number;
@@ -20,10 +37,13 @@ export type Character = {
   spirit: number;
   maxHitPoints: number;
   currentHitPoints: number;
+  maxEnergy: number;
+  currentEnergy: number;
   armor: number;
   resistance: number;
   class: CharacterClass;
   skills: Skill[];
+  fightId?: number;
 };
 
 type CreateCharacterInput = {
@@ -52,15 +72,34 @@ export const useCharacterList = () => {
   );
 };
 
-export const useCharacter = (id: number) => {
+export const useCharacter = (characterId: number) => {
   const toast = useToast();
 
   return useQuery(
-    ["characters", id],
-    () => axios.get(`/Character/${id}`).then((res): Character => res.data.data),
+    ["characters", characterId],
+    () =>
+      axios
+        .get(`/Character/${characterId}`)
+        .then((res): Character => res.data.data),
     {
       onError: () =>
         toast({ title: "Failed to get character data", status: "error" }),
+    }
+  );
+};
+
+export const useEnemies = (characterId: number) => {
+  const toast = useToast();
+
+  return useQuery(
+    ["enemies", characterId],
+    () =>
+      axios
+        .get(`/Character/${characterId}/enemies`)
+        .then((res): Character[] => res.data.data),
+    {
+      onError: () =>
+        toast({ title: "Failed to get enemy data", status: "error" }),
     }
   );
 };

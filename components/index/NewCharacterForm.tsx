@@ -17,9 +17,7 @@ import {
 import AttributeInput from "./AttributeInput";
 import RadioCard from "./RadioCard";
 import useNewCharacterContext from "../../context/NewCharacterContext";
-import { CharacterClass } from "../../types";
-
-const characterClasses: CharacterClass[] = ["Warrior", "Mage", "Priest"];
+import { CharacterClass, characterClasses } from "../../queries/character";
 
 const NewCharacterForm = () => {
   const {
