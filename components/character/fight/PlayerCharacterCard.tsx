@@ -19,6 +19,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
+import { GiHourglass, GiScreenImpact } from "react-icons/gi";
 import { Character } from "../../../queries/character";
 import { useWeaponAttack } from "../../../queries/fight";
 
@@ -56,7 +57,7 @@ const PlayerCharacterCard = ({ character, targetId }: Props) => {
       </CardHeader>
 
       <CardBody>
-        <Stack>
+        <Stack alignItems="center">
           <HStack justifyContent="center" gap={8}>
             <HStack>
               <Icon as={AiFillHeart} color="red.500" />
@@ -73,6 +74,14 @@ const PlayerCharacterCard = ({ character, targetId }: Props) => {
           </HStack>
 
           <Image src={character.avatar} alt="Character avatar" boxSize="2xs" />
+
+          <HStack gap={8}>
+            <Text>{character.weapon?.name ?? "No weapon"}</Text>
+            <HStack>
+              <Icon as={GiScreenImpact} />
+              <Text fontWeight="bold">{character.weapon?.damage ?? 0}</Text>
+            </HStack>
+          </HStack>
         </Stack>
       </CardBody>
 
@@ -85,30 +94,47 @@ const PlayerCharacterCard = ({ character, targetId }: Props) => {
           >
             Attack
           </Button>
+
           <Menu>
             <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
               Skills
             </MenuButton>
-            <MenuList w="400px">
+            <MenuList w="500px">
               {character.skills.map((s) => (
                 <MenuItem key={s.name} justifyContent="space-between">
-                  <Text fontStyle="italic" color="gray.500" flex={2}>
+                  <Text fontStyle="italic" color="gray.500" flex={1}>
                     {s.damageType}
                   </Text>
-                  <Text flex={2}>{s.name}</Text>
-                  <Text flex={1} fontWeight="bold">
-                    {s.damage}
-                  </Text>
+                  <Text flex={3}>{s.name}</Text>
+                  <HStack flex={1}>
+                    <Icon as={GiScreenImpact} />
+                    <Text fontWeight="bold">{s.damage}</Text>
+                  </HStack>
                   <HStack flex={1}>
                     <Icon as={AiFillThunderbolt} color="blue.500" />
                     <Text fontWeight="bold" color="blue.500">
-                      {/* Placeholder energy cost */}
-                      25
+                      {s.energyCost}
+                    </Text>
+                  </HStack>
+                  <HStack flex={1}>
+                    <Icon as={GiHourglass} color="purple.500" />
+                    <Text fontWeight="bold" color="purple.500">
+                      {s.cooldown}
                     </Text>
                   </HStack>
                 </MenuItem>
               ))}
             </MenuList>
+          </Menu>
+
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              isDisabled={true}
+            >
+              Items
+            </MenuButton>
           </Menu>
         </ButtonGroup>
       </CardFooter>

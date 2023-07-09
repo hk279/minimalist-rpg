@@ -1,4 +1,11 @@
-import { Center, HStack, Icon, Stack, useToast } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  HStack,
+  Icon,
+  Stack,
+  useToast,
+} from "@chakra-ui/react";
 import { useCharacter, useEnemies } from "../../../queries/character";
 import { useRouter } from "next/router";
 import LoadingPage from "../../../components/generic/LoadingPage";
@@ -6,7 +13,7 @@ import PlayerCharacterCard from "../../../components/character/fight/PlayerChara
 import { GiCrossedSwords } from "react-icons/gi";
 import EnemyCharacterCard from "../../../components/character/fight/EnemyCharacterCard";
 import { useState } from "react";
-import { useWeaponAttack } from "../../../queries/fight";
+import { ChevronLeftIcon } from "@chakra-ui/icons";
 
 // TODO: Create a react context for the fight
 
@@ -36,6 +43,17 @@ const Fight = () => {
 
   return (
     <Center h="100vh" bgColor="teal.50">
+      <Button
+        colorScheme="teal"
+        leftIcon={<ChevronLeftIcon />}
+        top={8}
+        left={8}
+        position="absolute"
+        onClick={() => router.push(`/character/${character.id}`)}
+      >
+        Back
+      </Button>
+
       <HStack gap={32}>
         <PlayerCharacterCard character={character} targetId={targetId} />
         <Icon as={GiCrossedSwords} boxSize={32} color="teal" />

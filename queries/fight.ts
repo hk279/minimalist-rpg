@@ -18,7 +18,8 @@ export const useWeaponAttack = () => {
     (request: AttackRequest) => axios.post("/fight/weapon-attack", request),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["characters", "enemies"] });
+        queryClient.invalidateQueries({ queryKey: ["characters"] });
+        queryClient.invalidateQueries({ queryKey: ["enemies"] });
         toast({ title: "Attack successful", status: "success" });
       },
       onError: () => {

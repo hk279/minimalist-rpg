@@ -13,6 +13,7 @@ import {
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 import { Character } from "../../../queries/character";
 import { GetServerSidePropsContext } from "next";
+import { GiScreenImpact } from "react-icons/gi";
 
 type Props = {
   character: Character;
@@ -39,7 +40,7 @@ const EnemyCharacterCard = ({ character, setAsTarget, isTargeted }: Props) => {
       </CardHeader>
 
       <CardBody>
-        <Stack>
+        <Stack alignItems="center">
           <HStack justifyContent="center" gap={8}>
             <HStack>
               <Icon as={AiFillHeart} color="red.500" />
@@ -61,6 +62,14 @@ const EnemyCharacterCard = ({ character, setAsTarget, isTargeted }: Props) => {
             alt="Character avatar"
             boxSize="2xs"
           />
+
+          <HStack gap={8}>
+            <Text>{character.weapon?.name ?? "No weapon"}</Text>
+            <HStack>
+              <Icon as={GiScreenImpact} />
+              <Text fontWeight="bold">{character.weapon?.damage ?? 0}</Text>
+            </HStack>
+          </HStack>
         </Stack>
       </CardBody>
     </Card>
@@ -68,9 +77,3 @@ const EnemyCharacterCard = ({ character, setAsTarget, isTargeted }: Props) => {
 };
 
 export default EnemyCharacterCard;
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return {
-    props: {},
-  };
-}

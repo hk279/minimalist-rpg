@@ -18,6 +18,11 @@ export const characterClasses = ["Warrior", "Mage", "Priest"];
 
 export type CharacterClass = "Warrior" | "Mage" | "Priest";
 
+type Weapon = {
+  name: string;
+  damage: number;
+};
+
 export type CharacterListing = {
   id: number;
   name: string;
@@ -41,6 +46,7 @@ export type Character = {
   currentEnergy: number;
   armor: number;
   resistance: number;
+  weapon?: Weapon;
   class: CharacterClass;
   skills: Skill[];
   fightId?: number;

@@ -19,6 +19,8 @@ import { GetServerSidePropsContext } from "next";
 import Attributes from "../../../components/character/Attributes";
 import Link from "next/link";
 import LoadingPage from "../../../components/generic/LoadingPage";
+import { ChevronLeftIcon } from "@chakra-ui/icons";
+import Skills from "../../../components/character/Skills";
 
 const CharacterView = () => {
   const router = useRouter();
@@ -28,6 +30,17 @@ const CharacterView = () => {
 
   return (
     <Box padding="4" h="100vh" w="100%" bgColor="teal.50">
+      <Button
+        colorScheme="teal"
+        leftIcon={<ChevronLeftIcon />}
+        top={8}
+        left={8}
+        position="absolute"
+        onClick={() => router.push("/")}
+      >
+        Back
+      </Button>
+
       <Stack spacing="4">
         <Stack
           divider={<StackDivider borderColor="gray.200" />}
@@ -56,7 +69,7 @@ const CharacterView = () => {
               <p>Inventory</p>
             </TabPanel>
             <TabPanel>
-              <p>Skills</p>
+              <Skills character={character} />
             </TabPanel>
           </TabPanels>
         </Tabs>
@@ -71,9 +84,6 @@ const CharacterView = () => {
               ) : (
                 "To Battle"
               )}
-            </Button>
-            <Button colorScheme="teal" variant="link">
-              <Link href="/">Go Back</Link>
             </Button>
           </ButtonGroup>
         </Center>
