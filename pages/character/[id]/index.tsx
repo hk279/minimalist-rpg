@@ -21,10 +21,19 @@ import Link from "next/link";
 import LoadingPage from "../../../components/generic/LoadingPage";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import Skills from "../../../components/character/Skills";
+import { useStartFight } from "../../../queries/fight";
 
 const CharacterView = () => {
   const router = useRouter();
-  const { data: character, isLoading } = useCharacter(Number(router.query.id));
+  const characterId = Number(router.query.id);
+  const { data: character, isLoading } = useCharacter(characterId);
+  const { mutateAsync: startFightAsync, isLoading: isStartingFight } =
+    useStartFight(characterId);
+
+  const startFight = async () => {
+    await startFightAsync();
+    router.push(`/character/${characterId}/fight`);
+  };
 
   if (isLoading || character == null) return <LoadingPage />;
 
@@ -76,15 +85,21 @@ const CharacterView = () => {
 
         <Center>
           <ButtonGroup spacing={8}>
-            <Button colorScheme="teal">
-              {character.fightId != null ? (
+            {character.fightId != null ? (
+              <Button colorScheme="teal">
                 <Link href={`/character/${character.id}/fight`}>
                   Continue Battle
                 </Link>
-              ) : (
-                "To Battle"
-              )}
-            </Button>
+              </Button>
+            ) : (
+              <Button
+                onClick={() => startFight()}
+                isLoading={isStartingFight}
+                colorScheme="teal"
+              >
+                To Battle
+              </Button>
+            )}
           </ButtonGroup>
         </Center>
       </Stack>

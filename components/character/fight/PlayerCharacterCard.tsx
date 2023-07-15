@@ -35,8 +35,8 @@ const PlayerCharacterCard = ({ character, targetId }: Props) => {
     if (character?.fightId != null && targetId != null) {
       weaponAttack({
         fightId: character?.fightId,
-        attackerId: character.id,
-        targetId: targetId,
+        playerCharacterId: character.id,
+        enemyCharacterId: targetId,
       });
     }
   };
