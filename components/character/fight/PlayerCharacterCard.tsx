@@ -21,7 +21,7 @@ import {
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 import { GiHourglass, GiScreenImpact } from "react-icons/gi";
 import { Character } from "../../../queries/character";
-import { useWeaponAttack } from "../../../queries/fight";
+import { useSkillAttack, useWeaponAttack } from "../../../queries/fight";
 
 type Props = {
   character: Character;
@@ -29,12 +29,28 @@ type Props = {
 };
 
 const PlayerCharacterCard = ({ character, targetId }: Props) => {
-  const { mutate: weaponAttack, isLoading } = useWeaponAttack();
+  const { mutate: weaponAttack, isLoading: isAttackingWithWeapon } =
+    useWeaponAttack();
+  const { mutate: skillAttack, isLoading: isAttackingWithSkill } =
+    useSkillAttack();
 
-  const attackWithWeapon = (targetId?: number) => {
+  const isAttacking = isAttackingWithWeapon || isAttackingWithSkill;
+
+  const attackWithWeapon = () => {
     if (character?.fightId != null && targetId != null) {
       weaponAttack({
         fightId: character?.fightId,
+        playerCharacterId: character.id,
+        enemyCharacterId: targetId,
+      });
+    }
+  };
+
+  const attackWithSkill = (skillId: number) => {
+    if (character?.fightId != null && targetId != null) {
+      skillAttack({
+        fightId: character?.fightId,
+        skillId: skillId,
         playerCharacterId: character.id,
         enemyCharacterId: targetId,
       });
@@ -89,19 +105,28 @@ const PlayerCharacterCard = ({ character, targetId }: Props) => {
         <ButtonGroup>
           <Button
             isDisabled={targetId == null}
-            isLoading={isLoading}
-            onClick={() => attackWithWeapon(targetId)}
+            isLoading={isAttacking}
+            onClick={() => attackWithWeapon()}
           >
             Attack
           </Button>
 
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+              isLoading={isAttacking}
+              isDisabled={targetId == null}
+            >
               Skills
             </MenuButton>
             <MenuList w="500px">
               {character.skills.map((s) => (
-                <MenuItem key={s.name} justifyContent="space-between">
+                <MenuItem
+                  key={s.name}
+                  justifyContent="space-between"
+                  onClick={() => attackWithSkill(s.id)}
+                >
                   <Text fontStyle="italic" color="gray.500" flex={1}>
                     {s.damageType}
                   </Text>
