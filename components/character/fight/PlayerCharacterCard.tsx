@@ -102,7 +102,8 @@ const PlayerCharacterCard = () => {
                   onClick={() => attackWithSkill(s.id)}
                   isDisabled={
                     s.targetType !== "Enemy" ||
-                    s.energyCost > character.currentEnergy
+                    s.energyCost > character.currentEnergy ||
+                    s.remainingCooldown > 0
                   }
                 >
                   <Text fontStyle="italic" color="gray.500" flex={1}>
@@ -122,7 +123,7 @@ const PlayerCharacterCard = () => {
                   <HStack flex={1}>
                     <Icon as={GiHourglass} color="purple.500" />
                     <Text fontWeight="bold" color="purple.500">
-                      {s.cooldown}
+                      {s.remainingCooldown} / {s.cooldown}
                     </Text>
                   </HStack>
                 </MenuItem>

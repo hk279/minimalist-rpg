@@ -5,8 +5,8 @@ import { useLogin } from "../../queries/auth";
 const LoginForm = () => {
   const { mutate: login, isLoading } = useLogin();
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("admin");
+  const [password, setPassword] = useState("admin");
 
   return (
     <Stack spacing={4} height={250} justifyContent="center">

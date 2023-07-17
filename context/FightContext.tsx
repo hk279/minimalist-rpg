@@ -27,8 +27,9 @@ export const FightProvider = (props: { children: ReactNode }) => {
   const router = useRouter();
   const toast = useToast();
   const characterId = Number(router.query.id);
-  const { data: character } = useCharacter(characterId);
-  const { data: enemies } = useEnemies(characterId);
+  const { data: character, isLoading: characterLoading } =
+    useCharacter(characterId);
+  const { data: enemies, isLoading: enemiesLoading } = useEnemies(characterId);
   const { mutateAsync: weaponAttack, isLoading: isAttackingWithWeapon } =
     useWeaponAttack();
   const { mutateAsync: skillAttack, isLoading: isAttackingWithSkill } =
@@ -37,12 +38,14 @@ export const FightProvider = (props: { children: ReactNode }) => {
   const [targetId, setTargetId] = useState<number>();
   const [turnEvents, setTurnEvents] = useState<PlayerActionResponse>();
 
-  if (character == null || enemies == null) return <LoadingPage />;
+  if (characterLoading || enemiesLoading) return <LoadingPage />;
 
   // TODO: Handle victory / defeat
-  if (character != null && character.fightId == null) {
-    router.push(`/character/${character.id}`);
+
+  if (character == null || character.fightId == null || enemies == null) {
+    router.push(`/character/${characterId}`);
     toast({ title: "Character is not in a fight", status: "error" });
+    return;
   }
 
   const toggleTarget = (characterId: number) => {

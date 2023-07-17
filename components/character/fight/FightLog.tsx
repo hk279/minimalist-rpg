@@ -20,8 +20,6 @@ const FightLog = () => {
   const { turnEvents } = useFightContext();
 
   const getActionEntry = (action?: Action) => {
-    console.log(action);
-
     if (action == null) return "";
 
     const {

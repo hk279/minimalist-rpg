@@ -22,7 +22,7 @@ type Weapon = {
   damage: number;
 };
 
-export type DamageType = "physical" | "magic";
+export type DamageType = "Physical" | "Magic";
 
 export type TargetType = "Self" | "Friendly" | "Enemy";
 
@@ -33,6 +33,7 @@ export type Skill = {
   healing: number;
   energyCost: number;
   cooldown: number;
+  remainingCooldown: number;
   damageType: DamageType;
   targetType: TargetType;
 };
