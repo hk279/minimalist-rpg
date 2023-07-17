@@ -12,21 +12,21 @@ import {
 } from "@chakra-ui/react";
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 import { Character } from "../../../queries/character";
-import { GetServerSidePropsContext } from "next";
 import { GiScreenImpact } from "react-icons/gi";
+import useFightContext from "../../../context/FightContext";
 
 type Props = {
   character: Character;
-  setAsTarget: (characterId: number) => void;
-  isTargeted: boolean;
 };
 
-const EnemyCharacterCard = ({ character, setAsTarget, isTargeted }: Props) => {
+const EnemyCharacterCard = ({ character }: Props) => {
+  const { toggleTarget, targetId } = useFightContext();
+
   return (
     <Card
-      onClick={() => setAsTarget(character.id)}
+      onClick={() => toggleTarget(character.id)}
       cursor="pointer"
-      boxShadow={isTargeted ? "0px 0px 0px 4px #319795" : ""}
+      boxShadow={targetId === character.id ? "0px 0px 0px 4px #319795" : ""}
     >
       <CardHeader>
         <Stack height={16} gap={1} alignItems="center">

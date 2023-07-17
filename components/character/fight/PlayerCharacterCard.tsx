@@ -20,42 +20,16 @@ import {
 } from "@chakra-ui/react";
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 import { GiHourglass, GiScreenImpact } from "react-icons/gi";
-import { Character } from "../../../queries/character";
-import { useSkillAttack, useWeaponAttack } from "../../../queries/fight";
+import useFightContext from "../../../context/FightContext";
 
-type Props = {
-  character: Character;
-  targetId?: number;
-};
-
-const PlayerCharacterCard = ({ character, targetId }: Props) => {
-  const { mutate: weaponAttack, isLoading: isAttackingWithWeapon } =
-    useWeaponAttack();
-  const { mutate: skillAttack, isLoading: isAttackingWithSkill } =
-    useSkillAttack();
-
-  const isAttacking = isAttackingWithWeapon || isAttackingWithSkill;
-
-  const attackWithWeapon = () => {
-    if (character?.fightId != null && targetId != null) {
-      weaponAttack({
-        fightId: character?.fightId,
-        playerCharacterId: character.id,
-        enemyCharacterId: targetId,
-      });
-    }
-  };
-
-  const attackWithSkill = (skillId: number) => {
-    if (character?.fightId != null && targetId != null) {
-      skillAttack({
-        fightId: character?.fightId,
-        skillId: skillId,
-        playerCharacterId: character.id,
-        enemyCharacterId: targetId,
-      });
-    }
-  };
+const PlayerCharacterCard = () => {
+  const {
+    character,
+    targetId,
+    isAttacking,
+    attackWithWeapon,
+    attackWithSkill,
+  } = useFightContext();
 
   return (
     <Card>
@@ -126,6 +100,10 @@ const PlayerCharacterCard = ({ character, targetId }: Props) => {
                   key={s.name}
                   justifyContent="space-between"
                   onClick={() => attackWithSkill(s.id)}
+                  isDisabled={
+                    s.targetType !== "Enemy" ||
+                    s.energyCost > character.currentEnergy
+                  }
                 >
                   <Text fontStyle="italic" color="gray.500" flex={1}>
                     {s.damageType}

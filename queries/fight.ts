@@ -14,7 +14,9 @@ type ActionType = "Skill" | "WeaponAttack";
 
 type FightStatus = "Ongoing" | "Victory" | "Defeat";
 
-type Action = {
+export type Action = {
+  characterId: number;
+  characterName: string;
   targetCharacterId: number;
   targetCharacterName: string;
   actionType: ActionType;
@@ -23,7 +25,7 @@ type Action = {
   healing: number;
 };
 
-type PlayerActionResponse = {
+export type PlayerActionResponse = {
   playerAction: Action;
   enemyActions: Action[];
   fightStatus: FightStatus;

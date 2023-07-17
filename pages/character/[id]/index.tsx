@@ -17,7 +17,6 @@ import { useCharacter } from "../../../queries/character";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
 import Attributes from "../../../components/character/Attributes";
-import Link from "next/link";
 import LoadingPage from "../../../components/generic/LoadingPage";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import Skills from "../../../components/character/Skills";
@@ -86,10 +85,11 @@ const CharacterView = () => {
         <Center>
           <ButtonGroup spacing={8}>
             {character.fightId != null ? (
-              <Button colorScheme="teal">
-                <Link href={`/character/${character.id}/fight`}>
-                  Continue Battle
-                </Link>
+              <Button
+                colorScheme="teal"
+                onClick={() => router.push(`/character/${character.id}/fight`)}
+              >
+                Continue Battle
               </Button>
             ) : (
               <Button

@@ -1,7 +1,6 @@
 import axios from "../axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useToast } from "@chakra-ui/react";
-import { Skill } from "../types";
 
 export type Attributes = {
   strength: number;
@@ -21,6 +20,21 @@ export type CharacterClass = "Warrior" | "Mage" | "Priest";
 type Weapon = {
   name: string;
   damage: number;
+};
+
+export type DamageType = "physical" | "magic";
+
+export type TargetType = "Self" | "Friendly" | "Enemy";
+
+export type Skill = {
+  id: number;
+  name: string;
+  damage: number;
+  healing: number;
+  energyCost: number;
+  cooldown: number;
+  damageType: DamageType;
+  targetType: TargetType;
 };
 
 export type CharacterListing = {

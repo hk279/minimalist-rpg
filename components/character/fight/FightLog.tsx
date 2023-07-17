@@ -1,7 +1,102 @@
-import { Card } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Divider,
+  Icon,
+  Stack,
+  Tag,
+  TagLabel,
+  TagLeftIcon,
+  Text,
+} from "@chakra-ui/react";
+import useFightContext from "../../../context/FightContext";
+import { Action } from "../../../queries/fight";
+import { GiScreenImpact } from "react-icons/gi";
+import { Fragment } from "react";
 
 const FightLog = () => {
-  return <Card></Card>;
+  const { turnEvents } = useFightContext();
+
+  const getActionEntry = (action?: Action) => {
+    console.log(action);
+
+    if (action == null) return "";
+
+    const {
+      actionType,
+      characterName,
+      targetCharacterName,
+      skillName,
+      damage,
+    } = action;
+
+    switch (actionType) {
+      case "WeaponAttack":
+        return (
+          <Box>
+            {getCharacterTag(characterName)}
+            {" attacked "}
+            {getCharacterTag(targetCharacterName)}
+            {" for "}
+            {getDamageTag(damage)}
+          </Box>
+        );
+      case "Skill":
+        return (
+          <Box>
+            {getCharacterTag(characterName)}
+            {" attacked "}
+            {getCharacterTag(targetCharacterName)}
+            {" with "}
+            {getSkillTag(skillName ?? "")}
+            {" for "}
+            {getDamageTag(damage)}
+          </Box>
+        );
+      default:
+        throw new Error("Invalid ActionType");
+    }
+  };
+
+  const getDamageTag = (damage: number) => (
+    <Tag colorScheme="blackAlpha">
+      <TagLeftIcon as={GiScreenImpact} />
+      <TagLabel>{damage}</TagLabel>
+    </Tag>
+  );
+
+  const getCharacterTag = (characterName: string) => (
+    <Tag colorScheme="teal">
+      <TagLabel>{characterName}</TagLabel>
+    </Tag>
+  );
+
+  const getSkillTag = (skillName: string) => (
+    <Tag colorScheme="blue">
+      <TagLabel>{skillName}</TagLabel>
+    </Tag>
+  );
+
+  return (
+    <Card>
+      <CardHeader>
+        <Text fontWeight="bold" textAlign="center">
+          Event Log
+        </Text>
+      </CardHeader>
+      <CardBody textAlign="center">
+        <Stack>
+          {getActionEntry(turnEvents?.playerAction)}
+          <Divider />
+          {turnEvents?.enemyActions.map((enemyAction, index) => (
+            <Fragment key={index}>{getActionEntry(enemyAction)}</Fragment>
+          ))}
+        </Stack>
+      </CardBody>
+    </Card>
+  );
 };
 
 export default FightLog;
