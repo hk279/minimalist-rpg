@@ -15,6 +15,7 @@ import useFightContext from "../../../context/FightContext";
 import { Action } from "../../../queries/fight";
 import { GiScreenImpact } from "react-icons/gi";
 import { Fragment } from "react";
+import DamageLabel from "../../generic/DamageLabel";
 
 const FightLog = () => {
   const { turnEvents } = useFightContext();
@@ -38,7 +39,7 @@ const FightLog = () => {
             {" attacked "}
             {getCharacterTag(targetCharacterName)}
             {" for "}
-            {getDamageTag(damage)}
+            <DamageLabel value={damage} />
           </Box>
         );
       case "Skill":
@@ -50,20 +51,13 @@ const FightLog = () => {
             {" with "}
             {getSkillTag(skillName ?? "")}
             {" for "}
-            {getDamageTag(damage)}
+            <DamageLabel value={damage} />
           </Box>
         );
       default:
         throw new Error("Invalid ActionType");
     }
   };
-
-  const getDamageTag = (damage: number) => (
-    <Tag colorScheme="blackAlpha">
-      <TagLeftIcon as={GiScreenImpact} />
-      <TagLabel>{damage}</TagLabel>
-    </Tag>
-  );
 
   const getCharacterTag = (characterName: string) => (
     <Tag colorScheme="teal">

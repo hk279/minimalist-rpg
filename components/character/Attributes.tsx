@@ -6,6 +6,7 @@ import {
   HStack,
   Icon,
   Image,
+  Progress,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -17,21 +18,37 @@ const Attributes = ({ character }: { character: Character }) => {
   return (
     <Card width="fit-content" padding="12">
       <Center>
-        <Stack>
-          <HStack justifyContent="center" gap={8}>
+        <Stack gap={8}>
+          <Stack>
             <HStack>
               <Icon as={AiFillHeart} color="red.500" />
+              <Progress
+                value={
+                  (character.currentHitPoints / character.maxHitPoints) * 100
+                }
+                textAlign="left"
+                colorScheme="red"
+                borderRadius="base"
+                flex={1}
+              />
               <Text fontWeight="bold" color="red.500">
                 {character.currentHitPoints} / {character.maxHitPoints}
               </Text>
             </HStack>
             <HStack>
               <Icon as={AiFillThunderbolt} color="blue.500" />
+              <Progress
+                value={(character.currentEnergy / character.maxEnergy) * 100}
+                textAlign="left"
+                colorScheme="blue"
+                borderRadius="base"
+                flex={1}
+              />
               <Text fontWeight="bold" color="blue.500">
                 {character.currentEnergy} / {character.maxEnergy}
               </Text>
             </HStack>
-          </HStack>
+          </Stack>
 
           <Divider />
 
@@ -55,6 +72,20 @@ const Attributes = ({ character }: { character: Character }) => {
                 <AttributeRow attribute="resistance" character={character} />
               </Grid>
             </Stack>
+          </HStack>
+
+          <Divider />
+
+          <HStack gap={4}>
+            <Text>Level {character.level}</Text>
+            <Progress
+              value={80}
+              textAlign="left"
+              colorScheme="teal"
+              borderRadius="base"
+              flex={1}
+            />
+            <Text>Level {character.level + 1}</Text>
           </HStack>
         </Stack>
       </Center>

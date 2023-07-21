@@ -9,11 +9,13 @@ import {
   Icon,
   Text,
   Image,
+  Progress,
+  Center,
 } from "@chakra-ui/react";
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 import { Character } from "../../../queries/character";
-import { GiScreenImpact } from "react-icons/gi";
 import useFightContext from "../../../context/FightContext";
+import DamageLabel from "../../generic/DamageLabel";
 
 type Props = {
   character: Character;
@@ -26,7 +28,7 @@ const EnemyCharacterCard = ({ character }: Props) => {
     <Card
       onClick={() => toggleTarget(character.id)}
       cursor="pointer"
-      boxShadow={targetId === character.id ? "0px 0px 0px 4px #319795" : ""}
+      boxShadow={targetId === character.id ? "0px 0px 0px 4px #319795" : "base"}
     >
       <CardHeader>
         <Stack height={16} gap={1} alignItems="center">
@@ -40,37 +42,54 @@ const EnemyCharacterCard = ({ character }: Props) => {
       </CardHeader>
 
       <CardBody>
-        <Stack alignItems="center">
-          <HStack justifyContent="center" gap={8}>
+        <Center>
+          <Stack>
             <HStack>
               <Icon as={AiFillHeart} color="red.500" />
+              <Progress
+                value={
+                  (character.currentHitPoints / character.maxHitPoints) * 100
+                }
+                textAlign="left"
+                colorScheme="red"
+                borderRadius="base"
+                flex={1}
+              />
               <Text fontWeight="bold" color="red.500">
                 {character.currentHitPoints} / {character.maxHitPoints}
               </Text>
             </HStack>
             <HStack>
               <Icon as={AiFillThunderbolt} color="blue.500" />
+              <Progress
+                value={(character.currentEnergy / character.maxEnergy) * 100}
+                textAlign="left"
+                colorScheme="blue"
+                borderRadius="base"
+                flex={1}
+              />
               <Text fontWeight="bold" color="blue.500">
                 {character.currentEnergy} / {character.maxEnergy}
               </Text>
             </HStack>
-          </HStack>
 
-          <Image
-            src={character.avatar}
-            fallbackSrc="/enemy_placeholder.png"
-            alt="Character avatar"
-            boxSize="2xs"
-          />
+            <Image
+              src={character.avatar}
+              fallbackSrc="/enemy_placeholder.png"
+              alt="Character avatar"
+              boxSize="2xs"
+            />
 
-          <HStack gap={8}>
-            <Text>{character.weapon?.name ?? "No weapon"}</Text>
-            <HStack>
-              <Icon as={GiScreenImpact} />
-              <Text fontWeight="bold">{character.weapon?.damage ?? 0}</Text>
-            </HStack>
-          </HStack>
-        </Stack>
+            {character.weapon == null ? (
+              <Text textAlign="center">No weapon</Text>
+            ) : (
+              <HStack justifyContent="center">
+                <Text>{character.weapon.name}</Text>
+                <DamageLabel value={character.weapon.damage} />
+              </HStack>
+            )}
+          </Stack>
+        </Center>
       </CardBody>
     </Card>
   );
