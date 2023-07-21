@@ -1,5 +1,5 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "../axios";
-import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useToast } from "@chakra-ui/react";
 
 export type Attributes = {
@@ -49,8 +49,10 @@ export type CharacterListing = {
 export type Character = {
   id: number;
   name: string;
-  level: number;
   avatar: string;
+  level: number;
+  experience: number;
+  nextLevelExperienceThreshold?: number;
   strength: number;
   intelligence: number;
   stamina: number;
@@ -81,7 +83,7 @@ export const useCharacterList = () => {
   const toast = useToast();
 
   return useQuery(
-    "characters",
+    ["characters"],
     () =>
       axios
         .get("/Character/all")

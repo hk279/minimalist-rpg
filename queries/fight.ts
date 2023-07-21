@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import axios, { AxiosError } from "axios";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type AttackRequest = {
   fightId: number;

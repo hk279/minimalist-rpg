@@ -78,14 +78,24 @@ const Attributes = ({ character }: { character: Character }) => {
 
           <HStack gap={4}>
             <Text>Level {character.level}</Text>
-            <Progress
-              value={80}
-              textAlign="left"
-              colorScheme="teal"
-              borderRadius="base"
-              flex={1}
-            />
-            <Text>Level {character.level + 1}</Text>
+            {character.nextLevelExperienceThreshold !== 0 && (
+              <>
+                <Progress
+                  value={
+                    character.nextLevelExperienceThreshold == null
+                      ? 100
+                      : (character.experience /
+                          character.nextLevelExperienceThreshold) *
+                        100
+                  }
+                  textAlign="left"
+                  colorScheme="teal"
+                  borderRadius="base"
+                  flex={1}
+                />
+                <Text>Level {character.level + 1}</Text>
+              </>
+            )}
           </HStack>
         </Stack>
       </Center>
