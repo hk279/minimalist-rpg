@@ -15,6 +15,15 @@ import AttributeRow from "./AttributeRow";
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 
 const Attributes = ({ character }: { character: Character }) => {
+  const getExperienceProgress = () => {
+    const { currentLevelTotalExperience, experienceTowardsNextLevel, level } =
+      character;
+
+    return level == 50
+      ? 100
+      : (experienceTowardsNextLevel / currentLevelTotalExperience) * 100;
+  };
+
   return (
     <Card width="fit-content" padding="12">
       <Center>
@@ -81,13 +90,7 @@ const Attributes = ({ character }: { character: Character }) => {
             {character.nextLevelExperienceThreshold !== 0 && (
               <>
                 <Progress
-                  value={
-                    character.nextLevelExperienceThreshold == null
-                      ? 100
-                      : (character.experience /
-                          character.nextLevelExperienceThreshold) *
-                        100
-                  }
+                  value={getExperienceProgress()}
                   textAlign="left"
                   colorScheme="teal"
                   borderRadius="base"

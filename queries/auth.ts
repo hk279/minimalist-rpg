@@ -28,9 +28,9 @@ export const useLogin = () => {
       axios.post("/Auth/login", input).then((res) => res.data.data),
     {
       onSuccess: (data: UserDetails) => {
-        toast({ title: "Welcome " + data.username, status: "success" });
         localStorage.setItem("token", data.token);
         router.push("/");
+        toast({ title: "Welcome " + data.username, status: "success" });
       },
       onError: () => {
         toast({ title: "Login failed", status: "error" });

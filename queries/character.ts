@@ -51,8 +51,8 @@ export type Character = {
   name: string;
   avatar: string;
   level: number;
-  experience: number;
-  nextLevelExperienceThreshold?: number;
+  currentLevelTotalExperience: number;
+  experienceTowardsNextLevel: number;
   strength: number;
   intelligence: number;
   stamina: number;

@@ -31,7 +31,6 @@ const CharacterView = () => {
 
   const startFight = async () => {
     await startFightAsync();
-    router.push(`/character/${characterId}/fight`);
   };
 
   if (isLoading || character == null) return <LoadingPage />;

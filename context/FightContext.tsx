@@ -1,4 +1,3 @@
-import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { ReactNode, createContext, useContext, useState } from "react";
 import { Character, useCharacter, useEnemies } from "../queries/character";
@@ -25,7 +24,6 @@ export const FightContext = createContext<FightContextInterface | null>(null);
 
 export const FightProvider = (props: { children: ReactNode }) => {
   const router = useRouter();
-  const toast = useToast();
   const characterId = Number(router.query.id);
   const { data: character, isLoading: characterLoading } =
     useCharacter(characterId);
@@ -40,11 +38,7 @@ export const FightProvider = (props: { children: ReactNode }) => {
 
   if (characterLoading || enemiesLoading) return <LoadingPage />;
 
-  // TODO: Handle victory / defeat
-
   if (character == null || character.fightId == null || enemies == null) {
-    router.push(`/character/${characterId}`);
-    toast({ title: "Character is not in a fight", status: "error" });
     return;
   }
 
