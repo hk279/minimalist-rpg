@@ -1,26 +1,21 @@
 import {
   TableContainer,
   Table,
-  TableCaption,
   Thead,
   Tr,
   Th,
   Tbody,
   Td,
-  Tfoot,
   Card,
   Center,
-  HStack,
   Icon,
 } from "@chakra-ui/react";
 import { Character } from "../../queries/character";
-import {
-  GiHealthIncrease,
-  GiHealthNormal,
-  GiHourglass,
-  GiScreenImpact,
-} from "react-icons/gi";
+import { GiHealthNormal, GiHourglass, GiScreenImpact } from "react-icons/gi";
 import { AiFillThunderbolt } from "react-icons/ai";
+import DamageRangeLabel from "../generic/DamageRangeLabel";
+import EnergyCostLabel from "../generic/EnergyCostLabel";
+import CooldownLabel from "../generic/CooldownLabel";
 
 const Skills = ({ character }: { character: Character }) => {
   return (
@@ -51,10 +46,25 @@ const Skills = ({ character }: { character: Character }) => {
                 <Tr key={s.id}>
                   <Td>{s.damageType}</Td>
                   <Td>{s.name}</Td>
-                  <Td>{s.damage}</Td>
-                  <Td>{s.healing}</Td>
-                  <Td>{s.energyCost}</Td>
-                  <Td>{s.cooldown}</Td>
+                  <Td>
+                    {s.minDamage !== 0 && s.maxDamage !== 0 && (
+                      <DamageRangeLabel
+                        minDamage={s.minDamage}
+                        maxDamage={s.maxDamage}
+                        showIcon={false}
+                      />
+                    )}
+                  </Td>
+                  <Td>{s.healing !== 0 && s.healing}</Td>
+                  <Td>
+                    <EnergyCostLabel
+                      energyCost={s.energyCost}
+                      showIcon={false}
+                    />
+                  </Td>
+                  <Td>
+                    <CooldownLabel cooldown={s.cooldown} showIcon={false} />
+                  </Td>
                 </Tr>
               ))}
             </Tbody>

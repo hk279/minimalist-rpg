@@ -53,7 +53,7 @@ export const useStartFight = (characterId: number) => {
 export const useWeaponAttack = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { handleSuccessfullAttack } = useActionResponseHandler();
+  const { handleSuccessfulAttack } = useActionResponseHandler();
 
   return useMutation<PlayerActionResponse, AxiosError, AttackRequest>(
     (request) =>
@@ -62,7 +62,7 @@ export const useWeaponAttack = () => {
       onSuccess: (response) => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });
         queryClient.invalidateQueries({ queryKey: ["enemies"] });
-        handleSuccessfullAttack(response);
+        handleSuccessfulAttack(response);
       },
       onError: (error) => {
         toast({ title: "Error", status: "error", description: error.message });
@@ -74,7 +74,7 @@ export const useWeaponAttack = () => {
 export const useSkillAttack = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { handleSuccessfullAttack } = useActionResponseHandler();
+  const { handleSuccessfulAttack } = useActionResponseHandler();
 
   return useMutation<PlayerActionResponse, AxiosError, SkillAttackRequest>(
     (request) =>
@@ -83,7 +83,7 @@ export const useSkillAttack = () => {
       onSuccess: (response) => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });
         queryClient.invalidateQueries({ queryKey: ["enemies"] });
-        handleSuccessfullAttack(response);
+        handleSuccessfulAttack(response);
       },
       onError: (error) => {
         toast({ title: "Error", status: "error", description: error.message });
@@ -96,7 +96,7 @@ const useActionResponseHandler = () => {
   const toast = useToast();
   const router = useRouter();
 
-  const handleSuccessfullAttack = (response: PlayerActionResponse) => {
+  const handleSuccessfulAttack = (response: PlayerActionResponse) => {
     toast({ title: "Attack successful", status: "info" });
 
     switch (response.fightStatus) {
@@ -113,5 +113,5 @@ const useActionResponseHandler = () => {
     }
   };
 
-  return { handleSuccessfullAttack };
+  return { handleSuccessfulAttack };
 };

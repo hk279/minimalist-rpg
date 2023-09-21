@@ -17,25 +17,46 @@ export const characterClasses = ["Warrior", "Mage", "Priest"];
 
 export type CharacterClass = "Warrior" | "Mage" | "Priest";
 
-type Weapon = {
-  name: string;
-  damage: number;
-};
-
 export type DamageType = "Physical" | "Magic";
 
 export type TargetType = "Self" | "Friendly" | "Enemy";
 
+export type ItemType = "Weapon" | "ArmorPiece";
+
+export type ItemRarity = "Common" | "Uncommon" | "Rare" | "Epic";
+
+export type ArmorSlot = "Head" | "Chest" | "Hands" | "Legs" | "Feet";
+
+export const armorSlots = ["Head", "Chest", "Hands", "Legs", "Feet"];
+
 export type Skill = {
   id: number;
   name: string;
-  damage: number;
+  minDamage: number;
+  maxDamage: number;
   healing: number;
   energyCost: number;
   cooldown: number;
   remainingCooldown: number;
   damageType: DamageType;
   targetType: TargetType;
+};
+
+export type EquippedItem = {
+  id: number;
+  name: string;
+  rarity: ItemRarity;
+};
+
+export type EquippedArmorPiece = EquippedItem & {
+  slot: ArmorSlot;
+  armor: number;
+  resistance: number;
+};
+
+export type EquippedWeapon = EquippedItem & {
+  minDamage: number;
+  maxDamage: number;
 };
 
 export type CharacterListing = {
@@ -63,9 +84,10 @@ export type Character = {
   currentEnergy: number;
   armor: number;
   resistance: number;
-  weapon?: Weapon;
   class: CharacterClass;
   skills: Skill[];
+  equippedWeapon?: EquippedWeapon;
+  equippedArmorPieces: EquippedArmorPiece[];
   fightId?: number;
 };
 

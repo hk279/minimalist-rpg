@@ -4,16 +4,13 @@ import {
   CardBody,
   CardHeader,
   Divider,
-  Icon,
   Stack,
   Tag,
   TagLabel,
-  TagLeftIcon,
   Text,
 } from "@chakra-ui/react";
 import useFightContext from "../../../context/FightContext";
 import { Action } from "../../../queries/fight";
-import { GiScreenImpact } from "react-icons/gi";
 import { Fragment } from "react";
 import DamageLabel from "../../generic/DamageLabel";
 
@@ -39,7 +36,7 @@ const FightLog = () => {
             {" attacked "}
             {getCharacterTag(targetCharacterName)}
             {" for "}
-            <DamageLabel value={damage} />
+            <DamageLabel damage={damage} />
           </Box>
         );
       case "Skill":
@@ -51,7 +48,7 @@ const FightLog = () => {
             {" with "}
             {getSkillTag(skillName ?? "")}
             {" for "}
-            <DamageLabel value={damage} />
+            <DamageLabel damage={damage} />
           </Box>
         );
       default:

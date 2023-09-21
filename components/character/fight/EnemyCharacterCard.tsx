@@ -15,7 +15,7 @@ import {
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 import { Character } from "../../../queries/character";
 import useFightContext from "../../../context/FightContext";
-import DamageLabel from "../../generic/DamageLabel";
+import DamageRangeLabel from "../../generic/DamageRangeLabel";
 
 type Props = {
   character: Character;
@@ -80,12 +80,15 @@ const EnemyCharacterCard = ({ character }: Props) => {
               boxSize="2xs"
             />
 
-            {character.weapon == null ? (
+            {character.equippedWeapon == null ? (
               <Text textAlign="center">No weapon</Text>
             ) : (
               <HStack justifyContent="center">
-                <Text>{character.weapon.name}</Text>
-                <DamageLabel value={character.weapon.damage} />
+                <Text>{character.equippedWeapon.name}</Text>
+                <DamageRangeLabel
+                  minDamage={character.equippedWeapon.minDamage}
+                  maxDamage={character.equippedWeapon.maxDamage}
+                />
               </HStack>
             )}
           </Stack>

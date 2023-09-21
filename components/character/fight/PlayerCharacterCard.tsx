@@ -22,9 +22,10 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
-import { GiHourglass, GiScreenImpact } from "react-icons/gi";
 import useFightContext from "../../../context/FightContext";
-import DamageLabel from "../../generic/DamageLabel";
+import DamageRangeLabel from "../../generic/DamageRangeLabel";
+import EnergyCostLabel from "../../generic/EnergyCostLabel";
+import CooldownCounterLabel from "../../generic/CooldownCounterLabel";
 
 const PlayerCharacterCard = () => {
   const {
@@ -88,12 +89,15 @@ const PlayerCharacterCard = () => {
               boxSize="2xs"
             />
 
-            {character.weapon == null ? (
+            {character.equippedWeapon == null ? (
               <Text textAlign="center">No weapon</Text>
             ) : (
               <HStack justifyContent="center">
-                <Text>{character.weapon.name}</Text>
-                <DamageLabel value={character.weapon.damage} />
+                <Text>{character.equippedWeapon.name}</Text>
+                <DamageRangeLabel
+                  minDamage={character.equippedWeapon.minDamage}
+                  maxDamage={character.equippedWeapon.maxDamage}
+                />
               </HStack>
             )}
           </Stack>
@@ -119,40 +123,44 @@ const PlayerCharacterCard = () => {
             >
               Skills
             </MenuButton>
-            <MenuList w="500px">
+            <MenuList w="700px">
               {character.skills.map((s) => (
                 <MenuItem
                   key={s.name}
-                  justifyContent="space-between"
                   onClick={() => attackWithSkill(s.id)}
                   isDisabled={
                     s.targetType !== "Enemy" ||
                     s.energyCost > character.currentEnergy ||
                     s.remainingCooldown > 0
                   }
+                  display="grid"
+                  gridTemplateColumns="2fr 4fr 2fr 2fr 2fr"
                 >
-                  <Text fontStyle="italic" color="gray.500" flex={1}>
+                  <Text fontStyle="italic" color="gray.500">
                     {s.damageType}
                   </Text>
-                  <Text flex={3}>{s.name}</Text>
-                  <HStack flex={1}>
-                    <Icon as={GiScreenImpact} />
-                    <Text fontWeight="bold">{s.damage}</Text>
-                  </HStack>
-                  <HStack flex={1}>
-                    <Icon as={AiFillThunderbolt} color="blue.500" />
-                    <Text fontWeight="bold" color="blue.500">
-                      {s.energyCost}
-                    </Text>
-                  </HStack>
-                  <HStack flex={1}>
-                    <Icon as={GiHourglass} color="purple.500" />
-                    <Text fontWeight="bold" color="purple.500">
-                      {s.remainingCooldown === 0
-                        ? "Ready"
-                        : `${s.remainingCooldown} / ${s.cooldown}`}
-                    </Text>
-                  </HStack>
+
+                  <Text>{s.name}</Text>
+
+                  <Box>
+                    {s.minDamage !== 0 && s.maxDamage !== 0 && (
+                      <DamageRangeLabel
+                        minDamage={s.minDamage}
+                        maxDamage={s.maxDamage}
+                      />
+                    )}
+                  </Box>
+
+                  <Box>
+                    <EnergyCostLabel energyCost={s.energyCost} />
+                  </Box>
+
+                  <Box>
+                    <CooldownCounterLabel
+                      cooldown={s.cooldown}
+                      remainingCooldown={s.remainingCooldown}
+                    />
+                  </Box>
                 </MenuItem>
               ))}
             </MenuList>
