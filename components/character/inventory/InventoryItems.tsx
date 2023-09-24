@@ -1,0 +1,98 @@
+import {
+  Card,
+  CardHeader,
+  Heading,
+  TableContainer,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  IconButton,
+  Td,
+  Icon,
+  CardFooter,
+} from "@chakra-ui/react";
+import {
+  Character,
+  Item,
+  useCharacterInventory,
+} from "../../../queries/character";
+import { AiOutlineMore } from "react-icons/ai";
+import useInventoryView from "./useInventoryView";
+import { GiBarbute, GiSwordBrandish } from "react-icons/gi";
+import { useMemo } from "react";
+
+const InventoryItems = ({ character }: { character: Character }) => {
+  const { data: inventory } = useCharacterInventory(character.id);
+
+  const totalWeight = useMemo(
+    () => inventory?.reduce((acc, curr) => (acc = acc + curr.weight), 0),
+    [inventory]
+  );
+
+  return (
+    <Card width="fit-content" padding="24px" align="center">
+      <CardHeader>
+        <Heading size="md">Inventory Items</Heading>
+      </CardHeader>
+
+      <TableContainer>
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              <Th>Slot</Th>
+              <Th>Name</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+
+          <Tbody>
+            {inventory
+              ?.filter((item) => !item.isEquipped)
+              .map((item) => (
+                <InventoryItemRow key={item.id} item={item} />
+              ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+
+      <CardFooter>
+        <Heading size="sm">
+          Weight: {totalWeight} / {character.inventorySize}
+        </Heading>
+      </CardFooter>
+    </Card>
+  );
+};
+
+const InventoryItemRow = ({ item }: { item: Item }) => {
+  const { getRarityColor } = useInventoryView();
+
+  return (
+    <Tr>
+      <Td>
+        {item.type === "Weapon" ? (
+          <Icon as={GiSwordBrandish} boxSize="8" />
+        ) : (
+          <Icon as={GiBarbute} boxSize="8" />
+        )}
+      </Td>
+      <Td
+        color={item.rarity != null ? getRarityColor(item.rarity) : ""}
+        fontWeight="bold"
+      >
+        {item.name}
+      </Td>
+      <Td>
+        <IconButton
+          variant="ghost"
+          aria-label="Item actions"
+          icon={<AiOutlineMore size="24" />}
+        />
+      </Td>
+    </Tr>
+  );
+};
+
+export default InventoryItems;

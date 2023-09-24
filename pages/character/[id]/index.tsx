@@ -22,6 +22,7 @@ import { ChevronLeftIcon } from "@chakra-ui/icons";
 import Skills from "../../../components/character/Skills";
 import { useStartFight } from "../../../queries/fight";
 import Inventory from "../../../components/character/Inventory";
+import InventoryView from "../../../components/character/inventory/InventoryView";
 
 const CharacterView = () => {
   const router = useRouter();
@@ -74,7 +75,7 @@ const CharacterView = () => {
               <Attributes character={character} />
             </TabPanel>
             <TabPanel>
-              <Inventory character={character} />
+              <InventoryView character={character} />
             </TabPanel>
             <TabPanel>
               <Skills character={character} />

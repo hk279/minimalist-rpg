@@ -42,10 +42,35 @@ export type Skill = {
   targetType: TargetType;
 };
 
+export type Item = {
+  id: number;
+  name: string;
+  type: ItemType;
+  level: number;
+  rarity: ItemRarity;
+  description: string;
+  weight: number;
+  value: number;
+  isEquipped: boolean;
+  strength: number;
+  intelligence: number;
+  stamina: number;
+  spirit: number;
+  minDamage?: number;
+  maxDamage?: number;
+  armorSlot?: ArmorSlot;
+  armor?: number;
+  resistance?: number;
+};
+
 export type EquippedItem = {
   id: number;
   name: string;
   rarity: ItemRarity;
+  strength: number;
+  intelligence: number;
+  stamina: number;
+  spirit: number;
 };
 
 export type EquippedArmorPiece = EquippedItem & {
@@ -89,6 +114,7 @@ export type Character = {
   equippedWeapon?: EquippedWeapon;
   equippedArmorPieces: EquippedArmorPiece[];
   fightId?: number;
+  inventorySize: number;
 };
 
 type CreateCharacterInput = {
@@ -129,6 +155,22 @@ export const useCharacter = (characterId: number) => {
     {
       onError: () =>
         toast({ title: "Failed to get character data", status: "error" }),
+    }
+  );
+};
+
+export const useCharacterInventory = (characterId: number) => {
+  const toast = useToast();
+
+  return useQuery(
+    ["inventory", characterId],
+    () =>
+      axios
+        .get(`/Character/${characterId}/inventory`)
+        .then((res): Item[] => res.data.data),
+    {
+      onError: (err) =>
+        toast({ title: "Failed to get character inventory", status: "error" }),
     }
   );
 };

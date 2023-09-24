@@ -9,11 +9,25 @@ import {
   IconButton,
   Tbody,
   Td,
+  Stack,
+  HStack,
+  Grid,
+  GridItem,
+  Box,
 } from "@chakra-ui/react";
 import { AiOutlineMore } from "react-icons/ai";
-import { Character, EquippedItem, armorSlots } from "../../queries/character";
+import {
+  Character,
+  EquippedArmorPiece,
+  EquippedItem,
+  EquippedWeapon,
+  armorSlots,
+  useCharacterInventory,
+} from "../../queries/character";
 
 const Inventory = ({ character }: { character: Character }) => {
+  const { data: inventory } = useCharacterInventory(character.id);
+
   const getRarityColor = (item?: EquippedItem) => {
     if (item != null) {
       switch (item.rarity) {
@@ -30,6 +44,18 @@ const Inventory = ({ character }: { character: Character }) => {
       }
     }
   };
+
+  // const getWeaponTooltip = (item: EquippedWeapon) => {
+  //   return (
+  //     <Grid>
+  //       <GridItem></GridItem>
+  //       <GridItem></GridItem>
+
+  //       <GridItem></GridItem>
+  //       <GridItem></GridItem>
+  //     </Grid>
+  //   );
+  // };
 
   return (
     <Card width="fit-content" padding="12">
