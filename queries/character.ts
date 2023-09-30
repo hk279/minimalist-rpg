@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "../axios";
 import { useToast } from "@chakra-ui/react";
+import { ItemRarity, ArmorSlot } from "./inventory";
 
 export type Attributes = {
   strength: number;
@@ -21,14 +22,6 @@ export type DamageType = "Physical" | "Magic";
 
 export type TargetType = "Self" | "Friendly" | "Enemy";
 
-export type ItemType = "Weapon" | "ArmorPiece";
-
-export type ItemRarity = "Common" | "Uncommon" | "Rare" | "Epic";
-
-export type ArmorSlot = "Head" | "Chest" | "Hands" | "Legs" | "Feet";
-
-export const armorSlots = ["Head", "Chest", "Hands", "Legs", "Feet"];
-
 export type Skill = {
   id: number;
   name: string;
@@ -40,27 +33,6 @@ export type Skill = {
   remainingCooldown: number;
   damageType: DamageType;
   targetType: TargetType;
-};
-
-export type Item = {
-  id: number;
-  name: string;
-  type: ItemType;
-  level: number;
-  rarity: ItemRarity;
-  description: string;
-  weight: number;
-  value: number;
-  isEquipped: boolean;
-  strength: number;
-  intelligence: number;
-  stamina: number;
-  spirit: number;
-  minDamage?: number;
-  maxDamage?: number;
-  armorSlot?: ArmorSlot;
-  armor?: number;
-  resistance?: number;
 };
 
 export type EquippedItem = {
@@ -155,22 +127,6 @@ export const useCharacter = (characterId: number) => {
     {
       onError: () =>
         toast({ title: "Failed to get character data", status: "error" }),
-    }
-  );
-};
-
-export const useCharacterInventory = (characterId: number) => {
-  const toast = useToast();
-
-  return useQuery(
-    ["inventory", characterId],
-    () =>
-      axios
-        .get(`/Character/${characterId}/inventory`)
-        .then((res): Item[] => res.data.data),
-    {
-      onError: (err) =>
-        toast({ title: "Failed to get character inventory", status: "error" }),
     }
   );
 };

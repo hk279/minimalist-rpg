@@ -10,11 +10,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Character } from "../../queries/character";
+import { Character } from "../../../queries/character";
 import AttributeRow from "./AttributeRow";
 import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 
-const Attributes = ({ character }: { character: Character }) => {
+const AttributesView = ({ character }: { character: Character }) => {
   const getExperienceProgress = () => {
     const { currentLevelTotalExperience, experienceTowardsNextLevel, level } =
       character;
@@ -102,4 +102,4 @@ const Attributes = ({ character }: { character: Character }) => {
   );
 };
 
-export default Attributes;
+export default AttributesView;

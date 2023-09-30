@@ -10,14 +10,14 @@ import {
   Center,
   Icon,
 } from "@chakra-ui/react";
-import { Character } from "../../queries/character";
+import { Character } from "../../../queries/character";
 import { GiHealthNormal, GiHourglass, GiScreenImpact } from "react-icons/gi";
 import { AiFillThunderbolt } from "react-icons/ai";
-import DamageRangeLabel from "../generic/DamageRangeLabel";
-import EnergyCostLabel from "../generic/EnergyCostLabel";
-import CooldownLabel from "../generic/CooldownLabel";
+import DamageRangeLabel from "../../generic/DamageRangeLabel";
+import EnergyCostLabel from "../../generic/EnergyCostLabel";
+import CooldownLabel from "../../generic/CooldownLabel";
 
-const Skills = ({ character }: { character: Character }) => {
+const SkillsView = ({ character }: { character: Character }) => {
   return (
     <Card width="fit-content" padding="12">
       <Center>
@@ -75,4 +75,4 @@ const Skills = ({ character }: { character: Character }) => {
   );
 };
 
-export default Skills;
+export default SkillsView;

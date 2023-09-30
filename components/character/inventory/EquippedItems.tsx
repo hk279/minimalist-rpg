@@ -11,9 +11,10 @@ import {
   IconButton,
   Td,
 } from "@chakra-ui/react";
-import { Character, ItemRarity, armorSlots } from "../../../queries/character";
+import { Character } from "../../../queries/character";
 import { AiOutlineMore } from "react-icons/ai";
 import useInventoryView from "./useInventoryView";
+import { armorSlots, ItemRarity } from "../../../queries/inventory";
 
 const Inventory = ({ character }: { character: Character }) => {
   return (

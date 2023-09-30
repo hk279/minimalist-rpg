@@ -12,19 +12,22 @@ import {
   Td,
   Icon,
   CardFooter,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Menu,
 } from "@chakra-ui/react";
-import {
-  Character,
-  Item,
-  useCharacterInventory,
-} from "../../../queries/character";
+import { Character } from "../../../queries/character";
 import { AiOutlineMore } from "react-icons/ai";
 import useInventoryView from "./useInventoryView";
 import { GiBarbute, GiSwordBrandish } from "react-icons/gi";
 import { useMemo } from "react";
+import { useCharacterInventory, Item } from "../../../queries/inventory";
 
 const InventoryItems = ({ character }: { character: Character }) => {
-  const { data: inventory } = useCharacterInventory(character.id);
+  const { useGetInventory, useEquipItem } = useCharacterInventory(character.id);
+  const { data: inventory, isLoading: inventoryLoading } = useGetInventory();
+  const { mutateAsync: equipItem, isLoading: isEquippingItem } = useEquipItem();
 
   const totalWeight = useMemo(
     () => inventory?.reduce((acc, curr) => (acc = acc + curr.weight), 0),
@@ -51,7 +54,11 @@ const InventoryItems = ({ character }: { character: Character }) => {
             {inventory
               ?.filter((item) => !item.isEquipped)
               .map((item) => (
-                <InventoryItemRow key={item.id} item={item} />
+                <InventoryItemRow
+                  key={item.id}
+                  item={item}
+                  equipItem={() => equipItem(item.id)}
+                />
               ))}
           </Tbody>
         </Table>
@@ -66,7 +73,12 @@ const InventoryItems = ({ character }: { character: Character }) => {
   );
 };
 
-const InventoryItemRow = ({ item }: { item: Item }) => {
+type InventoryItemRowProps = {
+  item: Item;
+  equipItem: () => void;
+};
+
+const InventoryItemRow = ({ item, equipItem }: InventoryItemRowProps) => {
   const { getRarityColor } = useInventoryView();
 
   return (
@@ -85,11 +97,24 @@ const InventoryItemRow = ({ item }: { item: Item }) => {
         {item.name}
       </Td>
       <Td>
-        <IconButton
+        {/* <IconButton
           variant="ghost"
           aria-label="Item actions"
           icon={<AiOutlineMore size="24" />}
-        />
+        /> */}
+
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            icon={<AiOutlineMore size="24" />}
+            variant="ghost"
+            aria-label="Item actions"
+          />
+          <MenuList>
+            <MenuItem onClick={equipItem}>Equip</MenuItem>
+            <MenuItem isDisabled={true}>Discard</MenuItem>
+          </MenuList>
+        </Menu>
       </Td>
     </Tr>
   );

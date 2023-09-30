@@ -16,12 +16,11 @@ import {
 import { useCharacter } from "../../../queries/character";
 import { useRouter } from "next/router";
 import { GetServerSidePropsContext } from "next";
-import Attributes from "../../../components/character/Attributes";
+import AttributesView from "../../../components/character/attributes/AttributesView";
 import LoadingPage from "../../../components/generic/LoadingPage";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import Skills from "../../../components/character/Skills";
+import SkillsView from "../../../components/character/skills/SkillsView";
 import { useStartFight } from "../../../queries/fight";
-import Inventory from "../../../components/character/Inventory";
 import InventoryView from "../../../components/character/inventory/InventoryView";
 
 const CharacterView = () => {
@@ -72,13 +71,13 @@ const CharacterView = () => {
 
           <TabPanels>
             <TabPanel>
-              <Attributes character={character} />
+              <AttributesView character={character} />
             </TabPanel>
             <TabPanel>
               <InventoryView character={character} />
             </TabPanel>
             <TabPanel>
-              <Skills character={character} />
+              <SkillsView character={character} />
             </TabPanel>
           </TabPanels>
         </Tabs>

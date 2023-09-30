@@ -26,7 +26,6 @@ import useFightContext from "../../../context/FightContext";
 import DamageRangeLabel from "../../generic/DamageRangeLabel";
 import EnergyCostLabel from "../../generic/EnergyCostLabel";
 import CooldownCounterLabel from "../../generic/CooldownCounterLabel";
-import { GiSwordBrandish } from "react-icons/gi";
 
 const PlayerCharacterCard = () => {
   const {
