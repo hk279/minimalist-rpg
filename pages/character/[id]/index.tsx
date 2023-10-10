@@ -58,7 +58,7 @@ const CharacterView = () => {
         >
           <Heading as="span">{character.name}</Heading>
           <Text>
-            {character.level} {character.class}
+            Level {character.level} {character.class}
           </Text>
         </Stack>
 
