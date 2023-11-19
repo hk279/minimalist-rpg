@@ -3,19 +3,19 @@ import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 
-type AttackRequest = {
+type PlayerActionRequest = {
   fightId: number;
   playerCharacterId: number;
-  enemyCharacterId: number;
+  targetCharacterId?: number;
 };
 
-type SkillAttackRequest = AttackRequest & { skillId: number };
+type PlayerSkillActionRequest = PlayerActionRequest & { skillId: number };
 
 type ActionType = "Skill" | "WeaponAttack";
 
 type FightStatus = "Ongoing" | "Victory" | "Defeat";
 
-export type Action = {
+export type ActionResponse = {
   characterId: number;
   characterName: string;
   targetCharacterId: number;
@@ -27,8 +27,8 @@ export type Action = {
 };
 
 export type PlayerActionResponse = {
-  playerAction: Action;
-  enemyActions: Action[];
+  playerAction: ActionResponse;
+  enemyActions: ActionResponse[];
   fightStatus: FightStatus;
 };
 
@@ -55,7 +55,7 @@ export const useWeaponAttack = () => {
   const queryClient = useQueryClient();
   const { handleSuccessfulAttack } = useActionResponseHandler();
 
-  return useMutation<PlayerActionResponse, AxiosError, AttackRequest>(
+  return useMutation<PlayerActionResponse, AxiosError, PlayerActionRequest>(
     (request) =>
       axios.post("/fight/weapon-attack", request).then((res) => res.data.data),
     {
@@ -71,14 +71,18 @@ export const useWeaponAttack = () => {
   );
 };
 
-export const useSkillAttack = () => {
+export const useUseSkill = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
   const { handleSuccessfulAttack } = useActionResponseHandler();
 
-  return useMutation<PlayerActionResponse, AxiosError, SkillAttackRequest>(
+  return useMutation<
+    PlayerActionResponse,
+    AxiosError,
+    PlayerSkillActionRequest
+  >(
     (request) =>
-      axios.post("/fight/skill-attack", request).then((res) => res.data.data),
+      axios.post("/fight/use-skill", request).then((res) => res.data.data),
     {
       onSuccess: (response) => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });
@@ -96,8 +100,8 @@ const useActionResponseHandler = () => {
   const toast = useToast();
   const router = useRouter();
 
-  const handleSuccessfulAttack = (response: PlayerActionResponse) => {
-    toast({ title: "Attack successful", status: "info" });
+  const handleSuccessfulAction = (response: PlayerActionResponse) => {
+    toast({ title: "Action successful", status: "info" });
 
     switch (response.fightStatus) {
       case "Victory":
@@ -113,5 +117,5 @@ const useActionResponseHandler = () => {
     }
   };
 
-  return { handleSuccessfulAttack };
+  return { handleSuccessfulAttack: handleSuccessfulAction };
 };

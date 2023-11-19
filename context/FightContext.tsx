@@ -4,7 +4,7 @@ import { Character, useCharacter, useEnemies } from "../queries/character";
 import LoadingPage from "../components/generic/LoadingPage";
 import {
   useWeaponAttack,
-  useSkillAttack,
+  useUseSkill,
   PlayerActionResponse,
 } from "../queries/fight";
 
@@ -31,7 +31,7 @@ export const FightProvider = (props: { children: ReactNode }) => {
   const { mutateAsync: weaponAttack, isLoading: isAttackingWithWeapon } =
     useWeaponAttack();
   const { mutateAsync: skillAttack, isLoading: isAttackingWithSkill } =
-    useSkillAttack();
+    useUseSkill();
 
   const [targetId, setTargetId] = useState<number>();
   const [turnEvents, setTurnEvents] = useState<PlayerActionResponse>();
@@ -60,7 +60,7 @@ export const FightProvider = (props: { children: ReactNode }) => {
       const attackResponse = await weaponAttack({
         fightId: character?.fightId,
         playerCharacterId: character.id,
-        enemyCharacterId: targetId,
+        targetCharacterId: targetId,
       });
       setTurnEvents(attackResponse);
     }
@@ -72,7 +72,7 @@ export const FightProvider = (props: { children: ReactNode }) => {
         fightId: character?.fightId,
         skillId: skillId,
         playerCharacterId: character.id,
-        enemyCharacterId: targetId,
+        targetCharacterId: targetId,
       });
       setTurnEvents(attackResponse);
     }

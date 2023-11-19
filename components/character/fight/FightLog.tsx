@@ -10,14 +10,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 import useFightContext from "../../../context/FightContext";
-import { Action } from "../../../queries/fight";
+import { ActionResponse } from "../../../queries/fight";
 import { Fragment } from "react";
 import DamageLabel from "../../generic/DamageLabel";
 
 const FightLog = () => {
   const { turnEvents } = useFightContext();
 
-  const getActionEntry = (action?: Action) => {
+  const getActionEntry = (action?: ActionResponse) => {
     if (action == null) return "";
 
     const {

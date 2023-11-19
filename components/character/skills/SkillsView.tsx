@@ -11,7 +11,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { Character } from "../../../queries/character";
-import { GiHealthNormal, GiHourglass, GiScreenImpact } from "react-icons/gi";
+import { GiHourglass, GiScreenImpact } from "react-icons/gi";
 import { AiFillThunderbolt } from "react-icons/ai";
 import DamageRangeLabel from "../../generic/DamageRangeLabel";
 import EnergyCostLabel from "../../generic/EnergyCostLabel";
@@ -31,9 +31,6 @@ const SkillsView = ({ character }: { character: Character }) => {
                   <Icon boxSize={4} as={GiScreenImpact} />
                 </Th>
                 <Th>
-                  <Icon boxSize={4} color="green.500" as={GiHealthNormal} />
-                </Th>
-                <Th>
                   <Icon boxSize={4} color="blue.500" as={AiFillThunderbolt} />
                 </Th>
                 <Th>
@@ -47,15 +44,14 @@ const SkillsView = ({ character }: { character: Character }) => {
                   <Td>{s.damageType}</Td>
                   <Td>{s.name}</Td>
                   <Td>
-                    {s.minDamage !== 0 && s.maxDamage !== 0 && (
+                    {s.minBaseDamage !== 0 && s.maxBaseDamage !== 0 && (
                       <DamageRangeLabel
-                        minDamage={s.minDamage}
-                        maxDamage={s.maxDamage}
+                        minDamage={s.minBaseDamage}
+                        maxDamage={s.maxBaseDamage}
                         showIcon={false}
                       />
                     )}
                   </Td>
-                  <Td>{s.healing !== 0 && s.healing}</Td>
                   <Td>
                     <EnergyCostLabel
                       energyCost={s.energyCost}

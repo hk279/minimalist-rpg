@@ -22,17 +22,40 @@ export type DamageType = "Physical" | "Magic";
 
 export type TargetType = "Self" | "Friendly" | "Enemy";
 
+type StatusEffect = {
+  name: string;
+  duration: number;
+  damagePerTurn: number;
+  healingPerTurn: number;
+  increasedDamagePercentage: number;
+  decreasedDamagePercentage: number;
+  increasedDamageTakenPercentage: number;
+  decreasedDamageTakenPercentage: number;
+  isStunned: boolean;
+  reducedStrengthPercentage: number;
+  reducedIntelligencePercentage: number;
+  reducedArmorPercentage: number;
+  reducedResistancePercentage: number;
+  increasedStrengthPercentage: number;
+  increasedIntelligencePercentage: number;
+  increasedArmorPercentage: number;
+  increasedResistancePercentage: number;
+};
+
 export type Skill = {
   id: number;
   name: string;
-  minDamage: number;
-  maxDamage: number;
-  healing: number;
+  description: string;
+  damageType: DamageType;
+  targetType: TargetType;
+  rank: number;
+  weaponDamagePercentage: number;
+  minBaseDamage: number;
+  maxBaseDamage: number;
   energyCost: number;
   cooldown: number;
   remainingCooldown: number;
-  damageType: DamageType;
-  targetType: TargetType;
+  statusEffect?: StatusEffect;
 };
 
 export type EquippedItem = {
