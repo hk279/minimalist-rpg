@@ -26,6 +26,7 @@ import useFightContext from "../../../context/FightContext";
 import DamageRangeLabel from "../../generic/DamageRangeLabel";
 import EnergyCostLabel from "../../generic/EnergyCostLabel";
 import CooldownCounterLabel from "../../generic/CooldownCounterLabel";
+import DamageLabel from "../../generic/DamageLabel";
 
 const PlayerCharacterCard = () => {
   const {
@@ -134,7 +135,7 @@ const PlayerCharacterCard = () => {
                     s.remainingCooldown > 0
                   }
                   display="grid"
-                  gridTemplateColumns="2fr 4fr 2fr 2fr 2fr"
+                  gridTemplateColumns="2fr 4fr 2fr 2fr 2fr 2fr"
                 >
                   <Text fontStyle="italic" color="gray.500">
                     {s.damageType}
@@ -143,10 +144,16 @@ const PlayerCharacterCard = () => {
                   <Text>{s.name}</Text>
 
                   <Box>
-                    {s.minDamage !== 0 && s.maxDamage !== 0 && (
+                    {s.weaponDamagePercentage > 0 && (
+                      <DamageLabel value={`${s.weaponDamagePercentage}%`} />
+                    )}
+                  </Box>
+
+                  <Box>
+                    {s.minBaseDamage !== 0 && s.maxBaseDamage !== 0 && (
                       <DamageRangeLabel
-                        minDamage={s.minDamage}
-                        maxDamage={s.maxDamage}
+                        minDamage={s.minBaseDamage}
+                        maxDamage={s.maxBaseDamage}
                       />
                     )}
                   </Box>

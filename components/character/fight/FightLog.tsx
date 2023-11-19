@@ -36,7 +36,7 @@ const FightLog = () => {
             {" attacked "}
             {getCharacterTag(targetCharacterName)}
             {" for "}
-            <DamageLabel damage={damage} />
+            <DamageLabel value={damage} />
           </Box>
         );
       case "Skill":
@@ -48,7 +48,7 @@ const FightLog = () => {
             {" with "}
             {getSkillTag(skillName ?? "")}
             {" for "}
-            <DamageLabel damage={damage} />
+            <DamageLabel value={damage} />
           </Box>
         );
       default:

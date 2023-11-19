@@ -1,12 +1,12 @@
 import { Tag, TagLeftIcon, TagLabel } from "@chakra-ui/react";
 import { GiScreenImpact } from "react-icons/gi";
 
-type Props = { damage: number };
+type Props = { value: number | string };
 
-const DamageLabel = ({ damage }: Props) => (
+const DamageLabel = ({ value }: Props) => (
   <Tag colorScheme="blackAlpha">
     <TagLeftIcon as={GiScreenImpact} />
-    <TagLabel>{damage}</TagLabel>
+    <TagLabel>{value}</TagLabel>
   </Tag>
 );
 
