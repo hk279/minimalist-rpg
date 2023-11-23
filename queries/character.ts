@@ -42,6 +42,11 @@ type StatusEffect = {
   increasedResistancePercentage: number;
 };
 
+export type StatusEffectInstance = {
+  remainingDuration: number;
+  statusEffect: StatusEffect;
+};
+
 export type Skill = {
   id: number;
   name: string;
@@ -56,6 +61,11 @@ export type Skill = {
   cooldown: number;
   remainingCooldown: number;
   statusEffect?: StatusEffect;
+};
+
+export type SkillInstance = {
+  remainingCooldown: number;
+  skill: Skill;
 };
 
 export type EquippedItem = {
@@ -105,11 +115,12 @@ export type Character = {
   armor: number;
   resistance: number;
   class: CharacterClass;
-  skills: Skill[];
   equippedWeapon?: EquippedWeapon;
   equippedArmorPieces: EquippedArmorPiece[];
   fightId?: number;
   inventorySize: number;
+  skillInstances: SkillInstance[];
+  statusEffectInstances: StatusEffectInstance[];
 };
 
 type CreateCharacterInput = {

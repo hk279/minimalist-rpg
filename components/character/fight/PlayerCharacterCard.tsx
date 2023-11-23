@@ -125,47 +125,47 @@ const PlayerCharacterCard = () => {
               Skills
             </MenuButton>
             <MenuList w="700px">
-              {character.skills.map((s) => (
+              {character.skillInstances.map(({ skill }) => (
                 <MenuItem
-                  key={s.name}
-                  onClick={() => attackWithSkill(s.id)}
+                  key={skill.name}
+                  onClick={() => attackWithSkill(skill.id)}
                   isDisabled={
-                    s.targetType !== "Enemy" ||
-                    s.energyCost > character.currentEnergy ||
-                    s.remainingCooldown > 0
+                    skill.targetType !== "Enemy" ||
+                    skill.energyCost > character.currentEnergy ||
+                    skill.remainingCooldown > 0
                   }
                   display="grid"
                   gridTemplateColumns="2fr 4fr 2fr 2fr 2fr 2fr"
                 >
                   <Text fontStyle="italic" color="gray.500">
-                    {s.damageType}
+                    {skill.damageType}
                   </Text>
 
-                  <Text>{s.name}</Text>
+                  <Text>{skill.name}</Text>
 
                   <Box>
-                    {s.weaponDamagePercentage > 0 && (
-                      <DamageLabel value={`${s.weaponDamagePercentage}%`} />
+                    {skill.weaponDamagePercentage > 0 && (
+                      <DamageLabel value={`${skill.weaponDamagePercentage}%`} />
                     )}
                   </Box>
 
                   <Box>
-                    {s.minBaseDamage !== 0 && s.maxBaseDamage !== 0 && (
+                    {skill.minBaseDamage !== 0 && skill.maxBaseDamage !== 0 && (
                       <DamageRangeLabel
-                        minDamage={s.minBaseDamage}
-                        maxDamage={s.maxBaseDamage}
+                        minDamage={skill.minBaseDamage}
+                        maxDamage={skill.maxBaseDamage}
                       />
                     )}
                   </Box>
 
                   <Box>
-                    <EnergyCostLabel energyCost={s.energyCost} />
+                    <EnergyCostLabel energyCost={skill.energyCost} />
                   </Box>
 
                   <Box>
                     <CooldownCounterLabel
-                      cooldown={s.cooldown}
-                      remainingCooldown={s.remainingCooldown}
+                      cooldown={skill.cooldown}
+                      remainingCooldown={skill.remainingCooldown}
                     />
                   </Box>
                 </MenuItem>

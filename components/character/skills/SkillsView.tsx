@@ -39,27 +39,27 @@ const SkillsView = ({ character }: { character: Character }) => {
               </Tr>
             </Thead>
             <Tbody>
-              {character.skills.map((s) => (
-                <Tr key={s.id}>
-                  <Td>{s.damageType}</Td>
-                  <Td>{s.name}</Td>
+              {character.skillInstances.map(({ skill }) => (
+                <Tr key={skill.id}>
+                  <Td>{skill.damageType}</Td>
+                  <Td>{skill.name}</Td>
                   <Td>
-                    {s.minBaseDamage !== 0 && s.maxBaseDamage !== 0 && (
+                    {skill.minBaseDamage !== 0 && skill.maxBaseDamage !== 0 && (
                       <DamageRangeLabel
-                        minDamage={s.minBaseDamage}
-                        maxDamage={s.maxBaseDamage}
+                        minDamage={skill.minBaseDamage}
+                        maxDamage={skill.maxBaseDamage}
                         showIcon={false}
                       />
                     )}
                   </Td>
                   <Td>
                     <EnergyCostLabel
-                      energyCost={s.energyCost}
+                      energyCost={skill.energyCost}
                       showIcon={false}
                     />
                   </Td>
                   <Td>
-                    <CooldownLabel cooldown={s.cooldown} showIcon={false} />
+                    <CooldownLabel cooldown={skill.cooldown} showIcon={false} />
                   </Td>
                 </Tr>
               ))}
