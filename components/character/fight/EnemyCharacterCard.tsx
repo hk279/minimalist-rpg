@@ -1,27 +1,10 @@
-import {
-  Card,
-  CardHeader,
-  Stack,
-  Heading,
-  HStack,
-  Divider,
-  CardBody,
-  Icon,
-  Text,
-  Image,
-  Progress,
-  Center,
-} from "@chakra-ui/react";
-import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
+import { Card } from "@chakra-ui/react";
 import { Character } from "../../../queries/character";
 import useFightContext from "../../../context/FightContext";
-import DamageRangeLabel from "../../generic/DamageRangeLabel";
+import CharacterCardHeader from "./CharacterCardHeader";
+import CharacterCardBody from "./CharacterCardBody";
 
-type Props = {
-  character: Character;
-};
-
-const EnemyCharacterCard = ({ character }: Props) => {
+const EnemyCharacterCard = ({ character }: { character: Character }) => {
   const { toggleTarget, targetId } = useFightContext();
 
   return (
@@ -30,70 +13,9 @@ const EnemyCharacterCard = ({ character }: Props) => {
       cursor="pointer"
       boxShadow={targetId === character.id ? "0px 0px 0px 4px #319795" : "base"}
     >
-      <CardHeader>
-        <Stack height={16} gap={1} alignItems="center">
-          <Heading size="md">{character.name}</Heading>
-          <HStack>
-            <Text>Level {character.level}</Text>
-          </HStack>
-        </Stack>
+      <CharacterCardHeader character={character} />
 
-        <Divider />
-      </CardHeader>
-
-      <CardBody>
-        <Center>
-          <Stack>
-            <HStack>
-              <Icon as={AiFillHeart} color="red.500" />
-              <Progress
-                value={
-                  (character.currentHitPoints / character.maxHitPoints) * 100
-                }
-                textAlign="left"
-                colorScheme="red"
-                borderRadius="base"
-                flex={1}
-              />
-              <Text fontWeight="bold" color="red.500">
-                {character.currentHitPoints} / {character.maxHitPoints}
-              </Text>
-            </HStack>
-            <HStack>
-              <Icon as={AiFillThunderbolt} color="blue.500" />
-              <Progress
-                value={(character.currentEnergy / character.maxEnergy) * 100}
-                textAlign="left"
-                colorScheme="blue"
-                borderRadius="base"
-                flex={1}
-              />
-              <Text fontWeight="bold" color="blue.500">
-                {character.currentEnergy} / {character.maxEnergy}
-              </Text>
-            </HStack>
-
-            <Image
-              src={character.avatar}
-              fallbackSrc="/enemy_placeholder.png"
-              alt="Character avatar"
-              boxSize="2xs"
-            />
-
-            {character.equippedWeapon == null ? (
-              <Text textAlign="center">No weapon</Text>
-            ) : (
-              <HStack justifyContent="center">
-                <Text>{character.equippedWeapon.name}</Text>
-                <DamageRangeLabel
-                  minDamage={character.equippedWeapon.minDamage}
-                  maxDamage={character.equippedWeapon.maxDamage}
-                />
-              </HStack>
-            )}
-          </Stack>
-        </Center>
-      </CardBody>
+      <CharacterCardBody character={character} />
     </Card>
   );
 };

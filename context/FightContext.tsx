@@ -14,9 +14,9 @@ interface FightContextInterface {
   targetId?: number;
   toggleTarget: (characterId: number) => void;
   returnToCharacter: () => void;
-  isAttacking: boolean;
-  attackWithWeapon: () => void;
-  attackWithSkill: (skillId: number) => void;
+  isLoading: boolean;
+  attackAction: () => void;
+  skillAction: (skillId: number) => void;
   turnEvents?: PlayerActionResponse;
 }
 
@@ -25,13 +25,14 @@ export const FightContext = createContext<FightContextInterface | null>(null);
 export const FightProvider = (props: { children: ReactNode }) => {
   const router = useRouter();
   const characterId = Number(router.query.id);
+
   const { data: character, isLoading: characterLoading } =
     useCharacter(characterId);
   const { data: enemies, isLoading: enemiesLoading } = useEnemies(characterId);
-  const { mutateAsync: weaponAttack, isLoading: isAttackingWithWeapon } =
+
+  const { mutateAsync: attackAction, isLoading: isAttacking } =
     useWeaponAttack();
-  const { mutateAsync: skillAttack, isLoading: isAttackingWithSkill } =
-    useUseSkill();
+  const { mutateAsync: skillAction, isLoading: isUsingSkill } = useUseSkill();
 
   const [targetId, setTargetId] = useState<number>();
   const [turnEvents, setTurnEvents] = useState<PlayerActionResponse>();
@@ -53,11 +54,11 @@ export const FightProvider = (props: { children: ReactNode }) => {
 
   const returnToCharacter = () => router.push(`/character/${character.id}`);
 
-  const isAttacking = isAttackingWithWeapon || isAttackingWithSkill;
+  const isLoading = isAttacking || isUsingSkill;
 
-  const attackWithWeapon = async () => {
+  const attack = async () => {
     if (character?.fightId != null && targetId != null) {
-      const attackResponse = await weaponAttack({
+      const attackResponse = await attackAction({
         fightId: character?.fightId,
         playerCharacterId: character.id,
         targetCharacterId: targetId,
@@ -66,9 +67,9 @@ export const FightProvider = (props: { children: ReactNode }) => {
     }
   };
 
-  const attackWithSkill = async (skillId: number) => {
+  const useSkill = async (skillId: number) => {
     if (character?.fightId != null && targetId != null) {
-      const attackResponse = await skillAttack({
+      const attackResponse = await skillAction({
         fightId: character?.fightId,
         skillId: skillId,
         playerCharacterId: character.id,
@@ -86,9 +87,9 @@ export const FightProvider = (props: { children: ReactNode }) => {
         targetId,
         toggleTarget,
         returnToCharacter,
-        isAttacking,
-        attackWithWeapon,
-        attackWithSkill,
+        isLoading,
+        attackAction: attack,
+        skillAction: useSkill,
         turnEvents,
       }}
     >
