@@ -57,7 +57,7 @@ export const useWeaponAttack = () => {
 
   return useMutation<PlayerActionResponse, AxiosError, PlayerActionRequest>(
     (request) =>
-      axios.post("/fight/weapon-attack", request).then((res) => res.data.data),
+      axios.post("/fight/weapon-attack", request).then((res) => res.data),
     {
       onSuccess: (response) => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });
@@ -82,7 +82,7 @@ export const useUseSkill = () => {
     PlayerSkillActionRequest
   >(
     (request) =>
-      axios.post("/fight/use-skill", request).then((res) => res.data.data),
+      axios.post("/fight/use-skill", request).then((res) => res.data),
     {
       onSuccess: (response) => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });

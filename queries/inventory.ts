@@ -39,9 +39,7 @@ export const useCharacterInventory = (characterId: number) => {
     useQuery(
       ["inventory", characterId],
       () =>
-        axios
-          .get(`/inventory/${characterId}`)
-          .then((res): Item[] => res.data.data),
+        axios.get(`/inventory/${characterId}`).then((res): Item[] => res.data),
       {
         onError: () =>
           toast({

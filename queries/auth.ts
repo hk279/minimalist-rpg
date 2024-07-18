@@ -25,7 +25,7 @@ export const useLogin = () => {
 
   return useMutation(
     (input: LoginInput) =>
-      axios.post("/Auth/login", input).then((res) => res.data.data),
+      axios.post("/Auth/login", input).then((res) => res.data),
     {
       onSuccess: (data: UserDetails) => {
         localStorage.setItem("token", data.token);

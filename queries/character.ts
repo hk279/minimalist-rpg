@@ -138,10 +138,7 @@ export const useCharacterList = () => {
 
   return useQuery(
     ["characters"],
-    () =>
-      axios
-        .get("/Character/all")
-        .then((res): CharacterListing[] => res.data.data),
+    () => axios.get("/characters").then((res): CharacterListing[] => res.data),
     {
       onError: () =>
         toast({ title: "Failed to get character list", status: "error" }),
@@ -156,8 +153,8 @@ export const useCharacter = (characterId: number) => {
     ["characters", characterId],
     () =>
       axios
-        .get(`/Character/${characterId}`)
-        .then((res): Character => res.data.data),
+        .get(`/characters/${characterId}`)
+        .then((res): Character => res.data),
     {
       onError: () =>
         toast({ title: "Failed to get character data", status: "error" }),
@@ -172,8 +169,8 @@ export const useEnemies = (characterId: number) => {
     ["enemies", characterId],
     () =>
       axios
-        .get(`/Character/${characterId}/enemies`)
-        .then((res): Character[] => res.data.data),
+        .get(`/characters/${characterId}/enemies`)
+        .then((res): Character[] => res.data),
     {
       onError: () =>
         toast({ title: "Failed to get enemy data", status: "error" }),
