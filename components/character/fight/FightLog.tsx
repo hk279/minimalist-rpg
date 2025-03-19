@@ -25,7 +25,7 @@ const FightLog = () => {
       characterName,
       targetCharacterName,
       skillName,
-      damage,
+      damageInstance,
     } = action;
 
     switch (actionType) {
@@ -36,7 +36,7 @@ const FightLog = () => {
             {" attacked "}
             {getCharacterTag(targetCharacterName)}
             {" for "}
-            <DamageLabel value={damage} />
+            <DamageLabel damageInstance={damageInstance} />
           </Box>
         );
       case "Skill":
@@ -48,7 +48,7 @@ const FightLog = () => {
             {" with "}
             {getSkillTag(skillName ?? "")}
             {" for "}
-            <DamageLabel value={damage} />
+            <DamageLabel damageInstance={damageInstance} />
           </Box>
         );
       default:

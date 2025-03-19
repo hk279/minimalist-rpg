@@ -76,7 +76,7 @@ export const NewCharacterProvider = (props: { children: ReactNode }) => {
     createCharacter({
       name: characterName,
       avatar: avatarUrl,
-      class: characterClass,
+      characterClass,
       ...attributes,
     });
   };

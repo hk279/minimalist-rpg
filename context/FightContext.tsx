@@ -40,7 +40,7 @@ export const FightProvider = (props: { children: ReactNode }) => {
   if (characterLoading || enemiesLoading) return <LoadingPage />;
 
   if (character == null || character.fightId == null || enemies == null) {
-    return;
+    return null;
   }
 
   const toggleTarget = (characterId: number) => {

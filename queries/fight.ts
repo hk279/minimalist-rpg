@@ -2,6 +2,17 @@ import { useToast } from "@chakra-ui/react";
 import axios, { AxiosError } from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { DamageType } from "./character";
+
+type BeginFightRequest = {
+  playerCharacterId: number;
+};
+
+type BeginFightResponse = {
+  fightId: number;
+  playerCharacterId: number;
+  enemyCharacterIds: number[];
+};
 
 type PlayerActionRequest = {
   fightId: number;
@@ -15,6 +26,14 @@ type ActionType = "Skill" | "WeaponAttack";
 
 type FightStatus = "Ongoing" | "Victory" | "Defeat";
 
+export type HitType = "Normal" | "WeakHit" | "CriticalHit";
+
+export type DamageInstance = {
+  totalDamage: number;
+  damageType: DamageType;
+  hitType: HitType;
+};
+
 export type ActionResponse = {
   characterId: number;
   characterName: string;
@@ -22,7 +41,7 @@ export type ActionResponse = {
   targetCharacterName: string;
   actionType: ActionType;
   skillName?: string;
-  damage: number;
+  damageInstance: DamageInstance;
   healing: number;
 };
 
@@ -32,22 +51,25 @@ export type PlayerActionResponse = {
   fightStatus: FightStatus;
 };
 
-export const useStartFight = (characterId: number) => {
+export const useStartFight = (playerCharacterId: number) => {
   const toast = useToast();
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useMutation(() => axios.post(`/fight/${characterId}`), {
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["characters"] });
-      queryClient.invalidateQueries({ queryKey: ["enemies"] });
-      router.push(`/character/${characterId}/fight`);
-      toast({ title: "A fight has begun!", status: "success" });
-    },
-    onError: (error: AxiosError) => {
-      toast({ title: "Error", status: "error", description: error.message });
-    },
-  });
+  return useMutation<BeginFightResponse, AxiosError, BeginFightRequest>(
+    () => axios.post(`/fights`, { playerCharacterId }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["characters"] });
+        queryClient.invalidateQueries({ queryKey: ["enemies"] });
+        router.push(`/character/${playerCharacterId}/fight`);
+        toast({ title: "A fight has begun!", status: "success" });
+      },
+      onError: (error: AxiosError) => {
+        toast({ title: "Error", status: "error", description: error.message });
+      },
+    }
+  );
 };
 
 export const useWeaponAttack = () => {

@@ -12,7 +12,7 @@ export type Attributes = {
 
 export type Attribute = "strength" | "intelligence" | "stamina" | "spirit";
 
-export type SecondaryAttribute = "armor" | "resistance";
+export type DefenseAttribute = "armor" | "resistance";
 
 export const characterClasses = ["Warrior", "Mage", "Priest"];
 
@@ -126,7 +126,7 @@ export type Character = {
 type CreateCharacterInput = {
   name: string;
   avatar: string;
-  class: CharacterClass;
+  characterClass: CharacterClass;
   strength: number;
   intelligence: number;
   stamina: number;
@@ -183,7 +183,7 @@ export const useCreateCharacter = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (input: CreateCharacterInput) => axios.post("/Character", input),
+    (input: CreateCharacterInput) => axios.post("/characters", input),
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });
