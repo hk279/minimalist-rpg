@@ -6,7 +6,7 @@ import {
   Menu,
   MenuButton,
 } from "@chakra-ui/react";
-import SkillsMenu from "./SkillsMenu";
+import SkillMenu from "./SkillMenu";
 import useFightContext from "../../../context/FightContext";
 
 const CharacterCardFooter = () => {
@@ -23,7 +23,7 @@ const CharacterCardFooter = () => {
           Attack
         </Button>
 
-        <SkillsMenu />
+        <SkillMenu />
 
         <Menu>
           <MenuButton

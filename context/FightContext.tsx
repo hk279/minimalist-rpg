@@ -7,6 +7,7 @@ import {
   useUseSkill,
   PlayerActionResponse,
 } from "../queries/fight";
+import { useCharacterId } from "../hooks/useCharacterId";
 
 interface FightContextInterface {
   character: Character;
@@ -24,7 +25,7 @@ export const FightContext = createContext<FightContextInterface | null>(null);
 
 export const FightProvider = (props: { children: ReactNode }) => {
   const router = useRouter();
-  const characterId = Number(router.query.id);
+  const characterId = useCharacterId();
 
   const { data: character, isLoading: characterLoading } =
     useCharacter(characterId);

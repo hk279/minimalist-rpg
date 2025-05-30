@@ -12,7 +12,7 @@ import {
 import useFightContext from "../../../context/FightContext";
 import { ActionResponse } from "../../../queries/fight";
 import { Fragment } from "react";
-import DamageLabel from "../../generic/DamageLabel";
+import FightLogDamageLabel from "./FightLogDamageLabel";
 
 const FightLog = () => {
   const { turnEvents } = useFightContext();
@@ -36,7 +36,7 @@ const FightLog = () => {
             {" attacked "}
             {getCharacterTag(targetCharacterName)}
             {" for "}
-            <DamageLabel damageInstance={damageInstance} />
+            <FightLogDamageLabel damageInstance={damageInstance} />
           </Box>
         );
       case "Skill":
@@ -48,7 +48,7 @@ const FightLog = () => {
             {" with "}
             {getSkillTag(skillName ?? "")}
             {" for "}
-            <DamageLabel damageInstance={damageInstance} />
+            <FightLogDamageLabel damageInstance={damageInstance} />
           </Box>
         );
       default:

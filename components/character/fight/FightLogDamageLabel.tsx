@@ -1,10 +1,12 @@
 import { Tag, TagLeftIcon, TagLabel } from "@chakra-ui/react";
 import { GiScreenImpact } from "react-icons/gi";
-import { DamageInstance } from "../../queries/fight";
+import { DamageInstance } from "../../../queries/fight";
 
-type Props = { damageInstance: DamageInstance };
+type Props = { damageInstance?: DamageInstance };
 
-const DamageLabel = ({ damageInstance }: Props) => {
+const FightLogDamageLabel = ({ damageInstance }: Props) => {
+  if (damageInstance == null) return null;
+
   const { totalDamage, damageType, hitType } = damageInstance;
 
   return (
@@ -18,4 +20,4 @@ const DamageLabel = ({ damageInstance }: Props) => {
   );
 };
 
-export default DamageLabel;
+export default FightLogDamageLabel;

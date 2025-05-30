@@ -41,7 +41,7 @@ export type ActionResponse = {
   targetCharacterName: string;
   actionType: ActionType;
   skillName?: string;
-  damageInstance: DamageInstance;
+  damageInstance?: DamageInstance;
   healing: number;
 };
 

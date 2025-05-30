@@ -59,7 +59,6 @@ export type Skill = {
   maxBaseDamage: number;
   energyCost: number;
   cooldown: number;
-  remainingCooldown: number;
   statusEffect?: StatusEffect;
 };
 
@@ -146,7 +145,7 @@ export const useCharacterList = () => {
   );
 };
 
-export const useCharacter = (characterId: number) => {
+export const useCharacter = (characterId?: number) => {
   const toast = useToast();
 
   return useQuery(
@@ -156,13 +155,14 @@ export const useCharacter = (characterId: number) => {
         .get(`/characters/${characterId}`)
         .then((res): Character => res.data),
     {
+      enabled: characterId != null,
       onError: () =>
         toast({ title: "Failed to get character data", status: "error" }),
     }
   );
 };
 
-export const useEnemies = (characterId: number) => {
+export const useEnemies = (characterId?: number) => {
   const toast = useToast();
 
   return useQuery(
@@ -172,6 +172,7 @@ export const useEnemies = (characterId: number) => {
         .get(`/characters/${characterId}/enemies`)
         .then((res): Character[] => res.data),
     {
+      enabled: characterId != null,
       onError: () =>
         toast({ title: "Failed to get enemy data", status: "error" }),
     }
