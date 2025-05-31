@@ -31,23 +31,33 @@ const FightLog = () => {
     switch (actionType) {
       case "WeaponAttack":
         return (
-          <Box>
+          <Box
+            display={"flex"}
+            flexWrap={"wrap"}
+            justifyContent={"center"}
+            rowGap={2}
+          >
             {getCharacterTag(characterName)}
-            {" attacked "}
+            <Text px={2}>attacked</Text>
             {getCharacterTag(targetCharacterName)}
-            {" for "}
+            <Text px={2}>for</Text>
             <FightLogDamageLabel damageInstance={damageInstance} />
           </Box>
         );
       case "Skill":
         return (
-          <Box>
+          <Box
+            display={"flex"}
+            flexWrap={"wrap"}
+            justifyContent={"center"}
+            rowGap={2}
+          >
             {getCharacterTag(characterName)}
-            {" attacked "}
+            <Text px={2}>attacked</Text>
             {getCharacterTag(targetCharacterName)}
-            {" with "}
+            <Text px={2}>with</Text>
             {getSkillTag(skillName ?? "")}
-            {" for "}
+            <Text px={2}>for</Text>
             <FightLogDamageLabel damageInstance={damageInstance} />
           </Box>
         );
@@ -69,14 +79,14 @@ const FightLog = () => {
   );
 
   return (
-    <Card>
+    <Card width="400px">
       <CardHeader>
         <Text fontWeight="bold" textAlign="center">
           Event Log
         </Text>
       </CardHeader>
       <CardBody textAlign="center">
-        <Stack>
+        <Stack gap={4}>
           {getActionEntry(turnEvents?.playerAction)}
           <Divider />
           {turnEvents?.enemyActions.map((enemyAction, index) => (

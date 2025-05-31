@@ -16,7 +16,7 @@ const SkillMenu = () => {
       >
         Skills
       </MenuButton>
-      <MenuList w="700px">
+      <MenuList w="800px" gap={2}>
         {character.skillInstances.map(({ remainingCooldown, skill }) => (
           <SkillMenuItem
             key={skill.id}

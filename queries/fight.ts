@@ -4,10 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { DamageType } from "./character";
 
-type BeginFightRequest = {
-  playerCharacterId: number;
-};
-
 type BeginFightResponse = {
   fightId: number;
   playerCharacterId: number;
@@ -56,8 +52,8 @@ export const useStartFight = (playerCharacterId: number) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useMutation<BeginFightResponse, AxiosError, BeginFightRequest>(
-    () => axios.post(`/fights`, { playerCharacterId }),
+  return useMutation<BeginFightResponse, AxiosError>(
+    () => axios.post("/fights", { playerCharacterId }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });

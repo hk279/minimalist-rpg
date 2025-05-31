@@ -1,4 +1,10 @@
-import { Tag, TagLeftIcon, TagLabel, TagProps } from "@chakra-ui/react";
+import {
+  Tag,
+  TagLeftIcon,
+  TagLabel,
+  TagProps,
+  Tooltip,
+} from "@chakra-ui/react";
 import { GiScreenImpact } from "react-icons/gi";
 
 type Props = TagProps & {
@@ -13,12 +19,14 @@ const DamageRangeLabel = ({
   showIcon = true,
   ...rest
 }: Props) => (
-  <Tag colorScheme="blackAlpha" {...rest}>
-    {showIcon && <TagLeftIcon as={GiScreenImpact} />}
-    <TagLabel>
-      {minDamage} - {maxDamage}
-    </TagLabel>
-  </Tag>
+  <Tooltip label="Damage range">
+    <Tag colorScheme="blackAlpha" {...rest}>
+      {showIcon && <TagLeftIcon as={GiScreenImpact} />}
+      <TagLabel>
+        {minDamage} - {maxDamage}
+      </TagLabel>
+    </Tag>
+  </Tooltip>
 );
 
 export default DamageRangeLabel;
