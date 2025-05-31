@@ -12,23 +12,28 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useCharacter } from "../../../queries/character";
 import { useRouter } from "next/router";
-import { GetServerSidePropsContext } from "next";
 import AttributesView from "../../../components/character/attributes/AttributesView";
 import LoadingPage from "../../../components/generic/LoadingPage";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import SkillsView from "../../../components/character/skills/SkillsView";
 import { useStartFight } from "../../../queries/fight";
 import InventoryView from "../../../components/character/inventory/InventoryView";
+import { useCharacterId } from "../../../hooks/useCharacterId";
+import { AssignAttributePointsProvider } from "../../../context/AssignAttributePointsContext";
+import AssignAttributePointsModal from "../../../components/character/attributes/AssignAttributePointsModal";
 
 const CharacterView = () => {
   const router = useRouter();
-  const characterId = Number(router.query.id);
+  const characterId = useCharacterId();
   const { data: character, isLoading } = useCharacter(characterId);
   const { mutateAsync: startFightAsync, isLoading: isStartingFight } =
     useStartFight(characterId);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const startFight = async () => {
     await startFightAsync();
@@ -101,13 +106,17 @@ const CharacterView = () => {
               </Button>
             )}
             {character.unassignedAttributePoints > 0 && (
-              <Button colorScheme="teal" onClick={() => null}>
+              <Button colorScheme="teal" onClick={onOpen}>
                 Assign Attribute Points ({character.unassignedAttributePoints})
               </Button>
             )}
           </ButtonGroup>
         </Center>
       </Stack>
+
+      <AssignAttributePointsProvider>
+        <AssignAttributePointsModal isOpen={isOpen} onClose={onClose} />
+      </AssignAttributePointsProvider>
     </Box>
   );
 };

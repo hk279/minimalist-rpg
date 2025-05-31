@@ -49,7 +49,7 @@ export type PlayerActionResponse = {
   hasLevelUp: boolean;
 };
 
-export const useStartFight = (playerCharacterId: number) => {
+export const useStartFight = (playerCharacterId?: number) => {
   const toast = useToast();
   const queryClient = useQueryClient();
   const router = useRouter();

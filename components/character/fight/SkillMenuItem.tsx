@@ -1,5 +1,5 @@
 import { Text, Box, MenuItem } from "@chakra-ui/react";
-import CooldownCounterLabel from "../../generic/CooldownCounterLabel";
+import CooldownCounterLabel from "./CooldownCounterLabel";
 import DamageRangeLabel from "../../generic/DamageRangeLabel";
 import EnergyCostLabel from "../../generic/EnergyCostLabel";
 import SimpleLabel from "../../generic/SimpleLabel";

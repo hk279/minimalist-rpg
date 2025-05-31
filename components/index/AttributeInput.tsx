@@ -8,24 +8,39 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 import useNewCharacterContext from "../../context/NewCharacterContext";
-import { Attribute } from "../../types";
+import { Attribute } from "../../queries/character";
 
-const AttributeInput = ({ attribute }: { attribute: Attribute }) => {
+type Props = {
+  attribute: Attribute;
+  currentValue?: number;
+  minValue?: number;
+  enableDecrement?: boolean;
+  enableIncrement?: boolean;
+  onDecrement: () => void;
+  onIncrement: () => void;
+};
+
+const AttributeInput = ({
+  attribute,
+  currentValue = 0,
+  minValue = 6,
+  enableIncrement = true,
+  onDecrement,
+  onIncrement,
+}: Props) => {
   const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } =
-    useNumberInput({
-      step: 1,
-    });
+    useNumberInput({ step: 1 });
 
   const increment = getIncrementButtonProps();
   const decrement = getDecrementButtonProps();
   const input = getInputProps();
 
-  const {
-    attributes,
-    remainingAttributePoints,
-    incrementAttribute,
-    decrementAttribute,
-  } = useNewCharacterContext();
+  // const {
+  //   attributes,
+  //   remainingAttributePoints,
+  //   incrementAttribute,
+  //   decrementAttribute,
+  // } = useNewCharacterContext();
 
   return (
     <>
@@ -39,8 +54,8 @@ const AttributeInput = ({ attribute }: { attribute: Attribute }) => {
             {...decrement}
             icon={<MinusIcon />}
             aria-label={`Decrement ${attribute}`}
-            isDisabled={attributes[attribute] < 6}
-            onClick={() => decrementAttribute(attribute)}
+            isDisabled={currentValue <= minValue}
+            onClick={onDecrement}
           />
 
           <Input
@@ -49,15 +64,15 @@ const AttributeInput = ({ attribute }: { attribute: Attribute }) => {
             textAlign="center"
             width="14"
             tabIndex={-1}
-            value={attributes[attribute]}
+            value={currentValue}
           />
 
           <IconButton
             {...increment}
             icon={<AddIcon />}
             aria-label={`Increment ${attribute}`}
-            isDisabled={remainingAttributePoints < 1}
-            onClick={() => incrementAttribute(attribute)}
+            isDisabled={!enableIncrement}
+            onClick={onIncrement}
           />
         </HStack>
       </GridItem>

@@ -9,22 +9,32 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import useNewCharacterContext from "../../context/NewCharacterContext";
-import NewCharacterForm from "./NewCharacterForm";
+import AssignAttributePointsForm from "./AssignAttributePointsForm";
+import useAssignAttributePointsContext from "../../../context/AssignAttributePointsContext";
+import { Attributes } from "../../../queries/character";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-const NewCharacterModal = ({ isOpen, onClose }: Props) => {
+const AssignAttributePointsModal = ({ isOpen, onClose }: Props) => {
   const {
-    createNewCharacter,
-    isCreatingCharacter,
-    characterName,
+    attributes,
+    initialAttributes,
+    saveAttributePoints,
     resetForm,
-    remainingAttributePoints,
-  } = useNewCharacterContext();
+    isSubmitting,
+  } = useAssignAttributePointsContext();
+
+  const areAttributesUnchanged =
+    attributes === null
+      ? true
+      : Object.keys(attributes).every(
+          (key) =>
+            attributes[key as keyof Attributes] ===
+            initialAttributes[key as keyof Attributes]
+        );
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="2xl">
@@ -35,14 +45,14 @@ const NewCharacterModal = ({ isOpen, onClose }: Props) => {
           alignItems="center"
           justifyContent="space-between"
         >
-          New Character
+          Assign Attribute Points
           <ModalCloseButton position="unset" />
         </ModalHeader>
 
         <Divider />
 
         <ModalBody>
-          <NewCharacterForm />
+          <AssignAttributePointsForm />
         </ModalBody>
 
         <Divider />
@@ -52,13 +62,11 @@ const NewCharacterModal = ({ isOpen, onClose }: Props) => {
             Close
           </Button>
           <Button
-            isDisabled={
-              characterName.length < 3 || remainingAttributePoints != 0
-            }
-            isLoading={isCreatingCharacter}
+            isDisabled={areAttributesUnchanged}
+            isLoading={isSubmitting}
             colorScheme="teal"
             onClick={() => {
-              createNewCharacter();
+              saveAttributePoints();
               resetForm();
               onClose();
             }}
@@ -71,4 +79,4 @@ const NewCharacterModal = ({ isOpen, onClose }: Props) => {
   );
 };
 
-export default NewCharacterModal;
+export default AssignAttributePointsModal;

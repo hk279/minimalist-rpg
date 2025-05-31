@@ -21,7 +21,10 @@ import { CharacterClass, characterClasses } from "../../queries/character";
 
 const NewCharacterForm = () => {
   const {
+    attributes,
     remainingAttributePoints,
+    incrementAttribute,
+    decrementAttribute,
     avatarUrl,
     randomizeAvatar,
     characterName,
@@ -83,10 +86,34 @@ const NewCharacterForm = () => {
 
         {/* Attributes */}
         <Grid gap={4} alignItems="center" width="70%" alignSelf="center">
-          <AttributeInput attribute="strength" />
-          <AttributeInput attribute="intelligence" />
-          <AttributeInput attribute="stamina" />
-          <AttributeInput attribute="spirit" />
+          <AttributeInput
+            attribute="strength"
+            currentValue={attributes.strength}
+            onDecrement={() => decrementAttribute("strength")}
+            onIncrement={() => incrementAttribute("strength")}
+            enableIncrement={remainingAttributePoints > 0}
+          />
+          <AttributeInput
+            attribute="intelligence"
+            currentValue={attributes.intelligence}
+            onDecrement={() => decrementAttribute("intelligence")}
+            onIncrement={() => incrementAttribute("intelligence")}
+            enableIncrement={remainingAttributePoints > 0}
+          />
+          <AttributeInput
+            attribute="stamina"
+            currentValue={attributes.stamina}
+            onDecrement={() => decrementAttribute("stamina")}
+            onIncrement={() => incrementAttribute("stamina")}
+            enableIncrement={remainingAttributePoints > 0}
+          />
+          <AttributeInput
+            attribute="spirit"
+            currentValue={attributes.spirit}
+            onDecrement={() => decrementAttribute("spirit")}
+            onIncrement={() => incrementAttribute("spirit")}
+            enableIncrement={remainingAttributePoints > 0}
+          />
 
           <GridItem gridColumn="2" justifySelf="end">
             <HStack gap={8} justifyContent="flex-end" width="fit-content">

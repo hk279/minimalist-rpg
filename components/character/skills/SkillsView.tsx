@@ -16,7 +16,7 @@ import { GiBroadsword, GiHourglass, GiScreenImpact } from "react-icons/gi";
 import { AiFillThunderbolt } from "react-icons/ai";
 import DamageRangeLabel from "../../generic/DamageRangeLabel";
 import EnergyCostLabel from "../../generic/EnergyCostLabel";
-import CooldownLabel from "../../generic/CooldownLabel";
+import CooldownLabel from "./CooldownLabel";
 
 const SkillsView = ({ character }: { character: Character }) => {
   return (

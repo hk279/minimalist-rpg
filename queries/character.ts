@@ -123,7 +123,7 @@ export type Character = {
   statusEffectInstances: StatusEffectInstance[];
 };
 
-type CreateCharacterInput = {
+type CreateCharacterRequest = {
   name: string;
   avatar: string;
   characterClass: CharacterClass;
@@ -131,6 +131,10 @@ type CreateCharacterInput = {
   intelligence: number;
   stamina: number;
   spirit: number;
+};
+
+type AssignAttributePointsRequest = Attributes & {
+  characterId: number;
 };
 
 export const useCharacterList = () => {
@@ -185,7 +189,7 @@ export const useCreateCharacter = () => {
   const queryClient = useQueryClient();
 
   return useMutation(
-    (input: CreateCharacterInput) => axios.post("/characters", input),
+    (input: CreateCharacterRequest) => axios.post("/characters", input),
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });
@@ -193,6 +197,30 @@ export const useCreateCharacter = () => {
       },
       onError: () => {
         toast({ title: "Character creation failed", status: "error" });
+      },
+    }
+  );
+};
+
+export const useAssignAttributePoints = () => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (request: AssignAttributePointsRequest) =>
+      axios.post(`/characters/assign-attribute-points`, request),
+    {
+      onSuccess: (_, request) => {
+        queryClient.invalidateQueries({
+          queryKey: ["characters", request.characterId],
+        });
+        toast({
+          title: "Attribute points assigned successfully",
+          status: "success",
+        });
+      },
+      onError: () => {
+        toast({ title: "Failed to assign attribute points", status: "error" });
       },
     }
   );
