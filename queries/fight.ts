@@ -45,6 +45,8 @@ export type PlayerActionResponse = {
   playerAction: ActionResponse;
   enemyActions: ActionResponse[];
   fightStatus: FightStatus;
+  experienceGained?: number;
+  hasLevelUp: boolean;
 };
 
 export const useStartFight = (playerCharacterId: number) => {
@@ -53,7 +55,7 @@ export const useStartFight = (playerCharacterId: number) => {
   const router = useRouter();
 
   return useMutation<BeginFightResponse, AxiosError>(
-    () => axios.post("/fights", { playerCharacterId }),
+    () => axios.post("/fight", { playerCharacterId }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ["characters"] });
@@ -119,16 +121,32 @@ const useActionResponseHandler = () => {
   const router = useRouter();
 
   const handleSuccessfulAction = (response: PlayerActionResponse) => {
+    const { playerAction, fightStatus, experienceGained, hasLevelUp } =
+      response;
+
     toast({ title: "Action successful", status: "info" });
 
-    switch (response.fightStatus) {
+    switch (fightStatus) {
       case "Victory":
-        toast({ title: "You are victorious!", status: "success" });
-        router.push(`/character/${response.playerAction.characterId}`);
+        toast({
+          title: "You are victorious!",
+          description: `+${experienceGained} EXP`,
+          status: "success",
+        });
+
+        if (hasLevelUp) {
+          toast({
+            title: "You have levelled up!",
+            description: "+1 attribute point",
+            status: "info",
+          });
+        }
+
+        router.push(`/character/${playerAction.characterId}`);
         break;
       case "Defeat":
         toast({ title: "You have been defeated", status: "error" });
-        router.push(`/character/${response.playerAction.characterId}`);
+        router.push(`/character/${playerAction.characterId}`);
         break;
       default:
         break;

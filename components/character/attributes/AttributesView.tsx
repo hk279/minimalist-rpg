@@ -16,12 +16,15 @@ import { AiFillHeart, AiFillThunderbolt } from "react-icons/ai";
 
 const AttributesView = ({ character }: { character: Character }) => {
   const getExperienceProgress = () => {
-    const { currentLevelTotalExperience, experienceTowardsNextLevel, level } =
-      character;
+    const {
+      currentLevelExperienceGained,
+      nextLevelExperienceThreshold,
+      level,
+    } = character;
 
     return level == 50
       ? 100
-      : (experienceTowardsNextLevel / currentLevelTotalExperience) * 100;
+      : (currentLevelExperienceGained / nextLevelExperienceThreshold) * 100;
   };
 
   return (

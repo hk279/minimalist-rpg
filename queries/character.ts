@@ -101,8 +101,9 @@ export type Character = {
   name: string;
   avatar: string;
   level: number;
-  currentLevelTotalExperience: number;
-  experienceTowardsNextLevel: number;
+  nextLevelExperienceThreshold: number;
+  currentLevelExperienceGained: number;
+  unassignedAttributePoints: number;
   strength: number;
   intelligence: number;
   stamina: number;

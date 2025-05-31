@@ -100,6 +100,11 @@ const CharacterView = () => {
                 To Battle
               </Button>
             )}
+            {character.unassignedAttributePoints > 0 && (
+              <Button colorScheme="teal" onClick={() => null}>
+                Assign Attribute Points ({character.unassignedAttributePoints})
+              </Button>
+            )}
           </ButtonGroup>
         </Center>
       </Stack>
@@ -108,9 +113,3 @@ const CharacterView = () => {
 };
 
 export default CharacterView;
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  return {
-    props: {},
-  };
-}
