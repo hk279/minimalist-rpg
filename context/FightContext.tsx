@@ -12,6 +12,7 @@ import { useCharacterId } from "../hooks/useCharacterId";
 interface FightContextInterface {
   character: Character;
   enemies: Character[];
+  isMultiEnemyFight: boolean;
   targetId?: number;
   toggleTarget: (characterId: number) => void;
   returnToCharacter: () => void;
@@ -56,6 +57,7 @@ export const FightProvider = (props: { children: ReactNode }) => {
   const returnToCharacter = () => router.push(`/character/${character.id}`);
 
   const isLoading = isAttacking || isUsingSkill;
+  const isMultiEnemyFight = enemies.length > 1;
 
   const attack = async () => {
     if (character?.fightId != null && targetId != null) {
@@ -64,6 +66,12 @@ export const FightProvider = (props: { children: ReactNode }) => {
         playerCharacterId: character.id,
         targetCharacterId: targetId,
       });
+
+      const attackedEnemy = enemies.find((enemy) => enemy.id === targetId);
+
+      // If the attacked enemy is dead, clear the target
+      if (attackedEnemy?.isDead) setTargetId(undefined);
+
       setTurnEvents(attackResponse);
     }
   };
@@ -85,6 +93,7 @@ export const FightProvider = (props: { children: ReactNode }) => {
       value={{
         character,
         enemies,
+        isMultiEnemyFight,
         targetId,
         toggleTarget,
         returnToCharacter,

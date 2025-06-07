@@ -16,7 +16,11 @@ import DamageRangeLabel from "../../generic/DamageRangeLabel";
 import { Character } from "../../../queries/character";
 import fallbackAvatar from "../../../public/enemy_placeholder.png";
 
-const CharacterCardBody = ({ character }: { character: Character }) => {
+type Props = {
+  character: Character;
+};
+
+const CharacterCardBody = ({ character }: Props) => {
   return (
     <CardBody gap={2} paddingTop={2}>
       <Center>

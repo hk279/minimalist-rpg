@@ -110,6 +110,7 @@ export type Character = {
   spirit: number;
   maxHitPoints: number;
   currentHitPoints: number;
+  isDead: boolean;
   maxEnergy: number;
   currentEnergy: number;
   armor: number;

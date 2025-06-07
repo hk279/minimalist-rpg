@@ -30,7 +30,7 @@ const FightView = () => {
           <FightLog />
         </Stack>
 
-        <Stack>
+        <Stack gap={4}>
           {enemies.map((e) => (
             <EnemyCharacterCard key={e.id} character={e} />
           ))}
