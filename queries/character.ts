@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "../axios";
 import { useToast } from "@chakra-ui/react";
 import { ItemRarity, ArmorSlot } from "./inventory";
+import { AxiosError } from "axios";
 
 export type Attributes = {
   strength: number;
@@ -222,6 +223,28 @@ export const useAssignAttributePoints = () => {
       },
       onError: () => {
         toast({ title: "Failed to assign attribute points", status: "error" });
+      },
+    }
+  );
+};
+
+export const useDeleteCharacter = (characterId?: number) => {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+
+  return useMutation<{}, AxiosError>(
+    () => axios.delete(`/characters/${characterId}`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["characters"] });
+        toast({ title: "Character deleted", status: "success" });
+      },
+      onError: (error) => {
+        toast({
+          title: "Character deletion failed",
+          status: "error",
+          description: error.message,
+        });
       },
     }
   );

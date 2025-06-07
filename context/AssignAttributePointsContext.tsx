@@ -2,9 +2,9 @@ import {
   createContext,
   ReactNode,
   useContext,
-  useEffect,
   useState,
   useMemo,
+  useEffect,
 } from "react";
 import {
   Attribute,
@@ -46,9 +46,11 @@ export const AssignAttributePointsProvider = (props: {
   );
 
   const [attributes, setAttributes] = useState(initialAttributes);
-  const [unassignedAttributePoints, setUnassignedAttributePoints] = useState(
-    character?.unassignedAttributePoints ?? 0
-  );
+  const [unassignedAttributePoints, setUnassignedAttributePoints] = useState(0);
+
+  useEffect(() => {
+    setUnassignedAttributePoints(character?.unassignedAttributePoints ?? 0);
+  }, [character]);
 
   const { mutate: assignAttributePoints, isLoading: isSubmitting } =
     useAssignAttributePoints();

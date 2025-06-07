@@ -63,7 +63,7 @@ export const useStartFight = (playerCharacterId?: number) => {
         router.push(`/character/${playerCharacterId}/fight`);
         toast({ title: "A fight has begun!", status: "success" });
       },
-      onError: (error: AxiosError) => {
+      onError: (error) => {
         toast({ title: "Error", status: "error", description: error.message });
       },
     }

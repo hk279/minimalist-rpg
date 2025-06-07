@@ -14,11 +14,11 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useCharacter } from "../../../queries/character";
+import { useCharacter, useDeleteCharacter } from "../../../queries/character";
 import { useRouter } from "next/router";
 import AttributesView from "../../../components/character/attributes/AttributesView";
 import LoadingPage from "../../../components/generic/LoadingPage";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, DeleteIcon } from "@chakra-ui/icons";
 import SkillsView from "../../../components/character/skills/SkillsView";
 import { useStartFight } from "../../../queries/fight";
 import InventoryView from "../../../components/character/inventory/InventoryView";
@@ -32,11 +32,17 @@ const CharacterView = () => {
   const { data: character, isLoading } = useCharacter(characterId);
   const { mutateAsync: startFightAsync, isLoading: isStartingFight } =
     useStartFight(characterId);
+  const { mutateAsync: deleteCharacterAsync } = useDeleteCharacter(characterId);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const startFight = async () => {
     await startFightAsync();
+  };
+
+  const deleteCharacter = async () => {
+    await deleteCharacterAsync();
+    router.push("/");
   };
 
   if (isLoading || character == null) return <LoadingPage />;
@@ -52,6 +58,17 @@ const CharacterView = () => {
         onClick={() => router.push("/")}
       >
         Back
+      </Button>
+
+      <Button
+        colorScheme="red"
+        leftIcon={<DeleteIcon />}
+        top={8}
+        right={8}
+        position="absolute"
+        onClick={() => deleteCharacter()}
+      >
+        Delete Character
       </Button>
 
       <Stack spacing="4">

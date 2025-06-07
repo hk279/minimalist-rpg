@@ -36,6 +36,12 @@ const AssignAttributePointsModal = ({ isOpen, onClose }: Props) => {
             initialAttributes[key as keyof Attributes]
         );
 
+  const handleSubmitAttributePoints = () => {
+    saveAttributePoints();
+    resetForm();
+    onClose();
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="2xl">
       <ModalOverlay />
@@ -65,11 +71,7 @@ const AssignAttributePointsModal = ({ isOpen, onClose }: Props) => {
             isDisabled={areAttributesUnchanged}
             isLoading={isSubmitting}
             colorScheme="teal"
-            onClick={() => {
-              saveAttributePoints();
-              resetForm();
-              onClose();
-            }}
+            onClick={() => handleSubmitAttributePoints()}
           >
             Create
           </Button>

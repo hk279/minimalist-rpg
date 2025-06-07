@@ -2,11 +2,11 @@ import { Card, Heading, HStack, Image, Stack, Text } from "@chakra-ui/react";
 import { CharacterListing } from "../../queries/character";
 import Link from "next/link";
 
-const CharacterSelectionCard = ({
-  character,
-}: {
+type Props = {
   character: CharacterListing;
-}) => {
+};
+
+const CharacterSelectionCard = ({ character }: Props) => {
   return (
     <Link href={`/character/${character.id}`}>
       <Card p={4} cursor="pointer" _hover={{ boxShadow: "xl" }}>

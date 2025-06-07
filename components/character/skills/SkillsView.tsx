@@ -33,7 +33,7 @@ const SkillsView = ({ character }: { character: Character }) => {
                     <Icon boxSize={4} as={GiBroadsword} />
                   </Th>
                 </Tooltip>
-                <Tooltip label="Damage range">
+                <Tooltip label="Base damage range">
                   <Th>
                     <Icon boxSize={4} as={GiScreenImpact} />
                   </Th>
